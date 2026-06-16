@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CEL-47 · Rapport Expertise 2026</title>
+<style>
+/* ── VARIABLES ── */
+:root{
+  --b:#1855A0;--bd:#0A3268;--bl:#EAF1FB;
+  --g:#256B10;--gl:#E5F3DC;
+  --r:#AE1E1E;--rl:#FAEAEA;
+  --a:#9A6200;--al:#FDF3DC;
+  --nl:#F0EEE8;--mu:#5A5856;
+  --border:#D0CECA;--bg:#F5F3EE;--tx:#252428;
+}
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  background:var(--bg);color:var(--tx);font-size:15px;line-height:1.5}
+
+/* ── HEADER ── */
+.hdr{background:var(--bd);color:#fff;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  position:sticky;top:0;z-index:50;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.hdr-logo{font-size:16px;font-weight:900;letter-spacing:1px}
+.hdr-title{flex:1;font-size:12px;opacity:.75;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.hdr-btn{padding:8px 13px;border-radius:6px;border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.12);color:#fff;font-size:12px;font-weight:700;cursor:pointer}
+.hdr-btn.green{background:#256B10;border-color:#3a9e1a}
+.hdr-btn.teal{background:#0C7060;border-color:#1a9e80}
+
+/* ── MAIN CONTAINER ── */
+.wrap{max-width:820px;margin:0 auto;padding:18px 14px 80px}
+
+/* ── CARD ── */
+.card{background:#fff;border:1px solid var(--border);border-radius:8px;
+  margin-bottom:18px;overflow:hidden}
+.card-hd{background:var(--bd);color:#fff;padding:11px 16px;
+  display:flex;align-items:center;gap:10px}
+.card-num{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);
+  font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-title{font-size:14px;font-weight:800}
+.card-sub{font-size:11px;opacity:.7;margin-top:1px}
+.card-body{padding:16px}
+
+/* ── SOUS-SECTION ── */
+.section{border-bottom:1px solid var(--nl);padding-bottom:15px;margin-bottom:15px}
+.section:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.section-title{font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.6px;color:var(--b);border-bottom:1px solid var(--bl);
+  padding-bottom:6px;margin-bottom:12px}
+
+/* ── GRILLES ── */
+.g1{display:grid;grid-template-columns:1fr;gap:10px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+@media(max-width:580px){.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* ── CHAMPS ── */
+.fd{display:flex;flex-direction:column;gap:4px}
+.lb{font-size:11px;font-weight:700;color:var(--mu)}
+input,textarea,select{
+  width:100%;padding:9px 11px;border:1.5px solid var(--border);
+  border-radius:6px;font-size:14px;background:#fff;color:var(--tx);
+  -webkit-appearance:none;font-family:inherit;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--b)}
+textarea{resize:vertical;min-height:65px}
+
+/* ── BOUTONS SÉLECTION (type / chambres) ── */
+.sel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.sel-btn{border:2px solid var(--border);border-radius:8px;padding:14px 10px;
+  background:#fff;text-align:center;cursor:pointer;user-select:none;
+  -webkit-tap-highlight-color:transparent;transition:border-color .15s,background .15s;
+  font-family:inherit;font-size:inherit;width:100%;display:block}
+.sel-btn.on{border-color:var(--b);background:var(--bl)}
+.sel-btn .ic{font-size:30px;margin-bottom:5px}
+.sel-btn .nm{font-size:13px;font-weight:800}
+.sel-btn .ds{font-size:10px;color:var(--mu);margin-top:2px}
+.nb-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.nb-btn{width:46px;height:46px;border:2px solid var(--border);border-radius:7px;
+  background:#fff;color:var(--mu);font-size:16px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+  transition:border-color .15s,background .15s,color .15s;
+  font-family:inherit;padding:0;flex-shrink:0}
+.nb-btn.on{background:var(--b);border-color:var(--b);color:#fff}
+
+/* ── PREVIEW PIÈCES ── */
+.pieces-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;min-height:24px}
+.piece-tag{background:var(--bl);color:var(--bd);padding:3px 11px;
+  border-radius:11px;font-size:11px;font-weight:700}
+
+/* ── MESURES TERRAIN ── */
+.mes-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:480px){.mes-grid{grid-template-columns:1fr 1fr}}
+.mes-card{background:var(--bl);border:1px solid #b5d0f0;border-radius:7px;padding:12px;text-align:center}
+.mes-inp{width:100%;text-align:center;font-size:22px;font-weight:800;color:var(--bd);
+  border:none;border-bottom:2px solid var(--b);background:transparent;
+  font-family:inherit;outline:none;padding:2px 0}
+.mes-unit{font-size:10px;color:var(--mu);font-weight:700;margin-top:4px}
+.rosee{background:var(--nl);border:1px solid var(--border);border-radius:6px;
+  padding:10px 14px;margin-top:8px;display:none;align-items:center;gap:12px}
+.rosee-val{font-size:22px;font-weight:900}
+.ok{color:var(--g)}.warn{color:var(--a)}.err{color:var(--r)}
+.flag-dpe{background:var(--rl);border:2px solid var(--r);border-radius:6px;
+  padding:10px 14px;font-size:12px;color:var(--r);font-weight:700;margin-top:8px;display:none}
+
+/* ── PHOTOS ── */
+.photo-section{margin-bottom:14px}
+.photo-label{font-weight:800;font-size:13px;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.photo-add{border:2px dashed var(--border);border-radius:7px;padding:18px;
+  text-align:center;background:#fafaf8;cursor:pointer}
+.photo-add-inp{display:none}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:8px}
+.photo-item{border:1px solid var(--border);border-radius:6px;overflow:hidden;position:relative}
+.photo-item img{width:100%;height:85px;object-fit:cover;display:block}
+.photo-del{position:absolute;top:3px;right:3px;background:rgba(0,0,0,.65);color:#fff;
+  border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;
+  display:flex;align-items:center;justify-content:center;padding:0}
+.photo-cap{padding:5px 6px}
+.photo-cap input{font-size:11px;border:none;border-bottom:1px solid var(--border);
+  border-radius:0;padding:2px 0;background:transparent}
+
+/* ── LÉGENDE CONSTAT ── */
+.legend{background:var(--nl);border:1px solid var(--border);border-radius:6px;
+  padding:10px 13px;margin-bottom:12px;font-size:11px}
+.legend strong{color:var(--bd);display:block;margin-bottom:5px;font-size:12px}
+.leg-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px}
+.badge{display:inline-flex;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:700}
+.b0{background:#e5f3dc;color:#256B10}.b1{background:#fffadc;color:#7a5500}
+.b2{background:#fdf3dc;color:#9A6200}.b3{background:#faeaea;color:#AE1E1E}
+.bx{background:var(--nl);color:var(--mu)}.ba{background:var(--bl);color:var(--bd)}
+
+/* ── SECTION CONSTAT ── */
+.sec-hd{background:var(--bl);border:1px solid #b5d0f0;border-radius:6px;
+  padding:9px 13px;margin:14px 0 10px;display:flex;align-items:flex-start;gap:9px}
+.sec-id{width:26px;height:26px;border-radius:50%;background:var(--b);color:#fff;
+  font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-name{font-weight:800;font-size:13px;color:var(--bd)}
+.sec-ref{font-size:10px;color:var(--b);margin-top:2px}
+.grp-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+  color:var(--mu);background:var(--nl);border-radius:5px;padding:5px 10px;
+  margin:10px 0 6px}
+.cst-item{border:1px solid var(--border);border-radius:6px;padding:11px 13px;margin-bottom:6px}
+.cst-text{font-size:13px;margin-bottom:9px;line-height:1.4}
+.btn-row{display:flex;align-items:center;gap:5px;margin-bottom:5px;flex-wrap:wrap}
+.row-key{font-size:10px;font-weight:800;color:var(--mu);min-width:24px}
+/* NE AD buttons */
+.ne-btn,.ad-btn{padding:6px 11px;border:1.5px solid var(--border);border-radius:13px;
+  cursor:pointer;font-size:12px;font-weight:700;background:#fff;color:var(--mu);
+  user-select:none;-webkit-tap-highlight-color:transparent}
+.ne-btn.on{background:var(--b);border-color:var(--b);color:#fff}
+.ne-btn[data-v="1"].on{background:#7a5500;border-color:#7a5500;color:#fff}
+.ne-btn[data-v="2"].on{background:var(--a);border-color:var(--a);color:#fff}
+.ne-btn[data-v="3"].on{background:var(--r);border-color:var(--r);color:#fff}
+.ne-btn[data-v="SO"].on,.ne-btn[data-v="NV"].on{background:var(--mu);border-color:var(--mu);color:#fff}
+.ad-btn.on{background:var(--bd);border-color:var(--bd);color:#fff}
+.nd-display{font-size:10px;color:var(--mu);font-style:italic;margin-top:4px}
+.cst-obs{width:100%;padding:6px 9px;border:1px solid var(--border);border-radius:5px;
+  font-size:12px;margin-top:7px;font-family:inherit;resize:vertical;background:#fff}
+.cst-obs:focus{border-color:var(--b);outline:none}
+/* Print values (hidden on screen) */
+.pv{display:none;flex-wrap:wrap;gap:4px;margin:3px 0}
+.pvt{font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;border:1px solid #ccc}
+.pvt0{background:#e5f3dc;color:#256B10}.pvt1{background:#fffadc;color:#7a5500}
+.pvt2{background:#fdf3dc;color:#9A6200}.pvt3{background:#faeaea;color:#AE1E1E}
+.pvtX{background:var(--nl);color:var(--mu)}.pvtA{background:var(--bl);color:var(--bd)}
+
+/* ── MISSION ── */
+.mission-btns{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.mission-btn{padding:10px 16px;border:2px solid var(--border);border-radius:7px;
+  background:#fff;cursor:pointer;font-size:13px;font-weight:700;color:var(--mu);
+  user-select:none;-webkit-tap-highlight-color:transparent}
+.mission-btn.on{background:var(--b);border-color:var(--b);color:#fff}
+.mission-info{border-radius:7px;border-left:4px solid var(--b);background:var(--bl);
+  padding:12px 14px;margin-top:8px;font-size:12px;line-height:1.6;display:none}
+.mission-info.on{display:block}
+
+/* ── CI / IDG ── */
+.ci-box{border:2px solid var(--border);border-radius:8px;padding:16px;text-align:center;margin-bottom:14px}
+.ci-val{font-size:52px;font-weight:900;margin:6px 0;line-height:1}
+.ci-bar{height:14px;border-radius:7px;background:var(--nl);overflow:hidden;margin:8px 0}
+.ci-fill{height:100%;border-radius:7px}
+.ci-verd{font-size:14px;font-weight:800;margin-top:5px}
+.dmdg-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.dmdg{flex:1;min-width:110px;background:var(--nl);border:1px solid var(--border);
+  border-radius:6px;padding:8px 12px;text-align:center}
+.dmdg-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--mu)}
+.dmdg-val{font-size:20px;font-weight:900;color:var(--bd);margin-top:3px}
+
+/* ── TABLEAU ── */
+.tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+.tbl th{background:var(--bl);color:var(--bd);padding:6px 7px;
+  text-align:left;border:1px solid var(--border)}
+.tbl td{border:1px solid var(--border);padding:5px 7px}
+.tbl tfoot td{background:var(--bl);font-weight:800}
+
+/* ── PRÉCONISATIONS ── */
+.prec-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.prec-tbl th{background:var(--bd);color:#fff;padding:7px 9px;
+  text-align:left;border:1px solid var(--border);font-size:11px}
+.prec-tbl td{border:1px solid var(--border);padding:6px 8px;vertical-align:top}
+.prec-tbl tr:nth-child(even) td{background:var(--nl)}
+.prec-tbl select,.prec-tbl input[type=text]{width:100%;border:none;
+  background:transparent;font-size:11px;color:var(--tx);padding:0}
+.urg3{color:var(--r);font-weight:700}.urg2{color:var(--a);font-weight:700}
+.urg1{color:#7a5500;font-weight:700}.urg0{color:var(--g);font-weight:700}
+
+/* ── SIGNATURES ── */
+.sig-tbl{width:100%;border-collapse:collapse}
+.sig-tbl td{border:1px solid var(--border);padding:14px;text-align:center;font-size:13px;vertical-align:top}
+.sig-box{height:56px;border:1px dashed var(--border);border-radius:5px;margin-top:10px;background:#fafaf8}
+
+/* ── OCCUPANT ── */
+.occ-blk{border:1px solid var(--border);border-radius:6px;padding:13px;
+  margin-bottom:10px;background:#fafaf8}
+.occ-hd{display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;font-weight:800;color:var(--b);margin-bottom:10px}
+.occ-del{background:none;border:none;color:var(--r);font-size:16px;font-weight:700;cursor:pointer;padding:0}
+
+/* ── RGPD ── */
+.rgpd-box{background:var(--nl);border:1px solid var(--border);border-radius:6px;
+  padding:12px 14px;font-size:11px;color:var(--mu);line-height:1.7;margin-bottom:10px}
+
+/* ── BARRE BAS ── */
+.bot-bar{background:#fff;border-top:2px solid var(--border);padding:11px 14px;
+  display:flex;gap:9px;justify-content:center;flex-wrap:wrap;
+  position:sticky;bottom:0;z-index:50;box-shadow:0 -2px 8px rgba(0,0,0,.08);
+  padding-bottom:max(11px,env(safe-area-inset-bottom))}
+.bot-btn{padding:11px 18px;border-radius:7px;border:none;font-size:13px;font-weight:800;cursor:pointer}
+.bot-btn.green{background:var(--g);color:#fff}
+.bot-btn.teal{background:#0C7060;color:#fff}
+.bot-btn.brown{background:#7a5000;color:#fff}
+.bot-as{font-size:10px;color:var(--mu);text-align:center;width:100%;padding:3px 0}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--g);display:inline-block;
+  margin-right:4px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── ALERTES ── */
+.alert{background:var(--rl);border:1px solid #f09090;border-radius:6px;
+  padding:10px 14px;font-size:12px;color:var(--r);font-weight:700;margin-bottom:10px}
+
+/* ── IMPRESSION ── */
+@media print{
+  @page{size:A4;margin:12mm 10mm 14mm 10mm}
+  .hdr,.bot-bar,.ne-btn,.ad-btn,.btn-row,.mission-btns,
+  .photo-add,.photo-del,.prec-add-btn,button:not(.keep){display:none!important}
+  body{background:#fff;font-size:9pt;color:#000}
+  .card{border:1pt solid #ccc;margin-bottom:7pt;box-shadow:none;page-break-inside:avoid}
+  .card-hd{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{padding:0;max-width:100%}
+  .pv{display:flex!important}
+  .mission-info.on{display:block!important}
+  .flag-dpe.show{display:block!important}
+  .cst-obs{border:none;background:none;font-size:8pt;font-style:italic;padding:0}
+  input,select,textarea{border:none;background:transparent;font-size:8.5pt}
+  .prt-footer{display:block!important;font-size:7pt;color:#666;text-align:center;
+    margin-top:8pt;padding-top:4pt;border-top:.5pt solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-logo">CEL-47</div>
+  <div class="hdr-title" id="hdr-title">Rapport d'Expertise Insalubrité · 2026</div>
+  <button class="hdr-btn brown" id="hbtn-prj">📁</button>
+  <button class="hdr-btn green" id="hbtn-sv">💾</button>
+  <button class="hdr-btn teal" id="hbtn-pr">🖨️</button>
+</div>
+
+<div class="wrap">
+
+<!-- ═══════ 1. DEMANDEUR ═══════ -->
+<div class="card">
+  <div class="card-hd">
+    <div class="card-num">1</div>
+    <div><div class="card-title">Identification du demandeur</div>
+    <div class="card-sub">Mandataire · Mission · Horodatage</div></div>
+  </div>
+  <div class="card-body">
+
+    <div class="section">
+      <div class="section-title">Qualité et identité</div>
+      <div class="g2">
+        <div class="fd"><label class="lb">Qualité du demandeur</label>
+          <select id="d_qual">
+            <option>Propriétaire / Bailleur</option><option>Locataire</option>
+            <option>Collectivité territoriale</option><option>Association</option><option>Autre</option>
+          </select></div>
+        <div class="fd"><label class="lb">N° opération / dossier</label><input type="text" id="d_op"></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">Nom</label><input type="text" id="d_nom"></div>
+        <div class="fd"><label class="lb">Prénom</label><input type="text" id="d_prn"></div>
+        <div class="fd"><label class="lb">Date de naissance</label><input type="date" id="d_ddn"></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">Téléphone</label><input type="tel" id="d_tel"></div>
+        <div class="fd"><label class="lb">E-mail</label><input type="email" id="d_mail"></div>
+        <div class="fd"><label class="lb">SIRET (si personne morale)</label><input type="text" id="d_sir"></div>
+      </div>
+      <div class="fd" style="margin-top:10px"><label class="lb">Adresse postale</label><input type="text" id="d_adr"></div>
+      <div class="fd" style="margin-top:10px"><label class="lb">Motif de la demande</label>
+        <textarea id="d_mot" rows="2" placeholder="Litige locatif, insalubrité suspectée, dossier ANAH…"></textarea></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Expert · Mission · Horodatage</div>
+      <div class="g3">
+        <div class="fd"><label class="lb">Expert mandaté</label><input type="text" id="d_exp" value="Denis Charbonnier"></div>
+        <div class="fd"><label class="lb">Organisme</label><input type="text" id="d_org" value="CEL-47"></div>
+        <div class="fd"><label class="lb">SIRET expert</label><input type="text" id="d_siret" placeholder="XXX XXX XXX XXXXX"></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">Date d'expertise</label><input type="date" id="d_dt"></div>
+        <div class="fd"><label class="lb">Heure arrivée</label><input type="text" id="d_hr" placeholder="09h30"></div>
+        <div class="fd"><label class="lb">Heure fin</label><input type="text" id="d_hrfin" placeholder="11h30"></div>
+      </div>
+      <div class="g2" style="margin-top:10px">
+        <div class="fd"><label class="lb">Accompagnant sur place</label><input type="text" id="d_acc"></div>
+        <div class="fd"><label class="lb">Lettre de mission</label>
+          <select id="d_lm">
+            <option value="">— Sélectionner —</option>
+            <option value="oui">✅ Annexée au rapport</option>
+            <option value="ref">📋 Référencée</option>
+            <option value="non">⚠️ Non disponible</option>
+          </select></div>
+      </div>
+      <div class="fd" style="margin-top:10px"><label class="lb">Référence lettre de mission</label>
+        <input type="text" id="d_lmref" placeholder="N° commande, date courriel…"></div>
+      <div class="fd" style="margin-top:10px"><label class="lb">Observations préliminaires</label>
+        <textarea id="d_obs" rows="2"></textarea></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ 2. LOCATAIRE ═══════ -->
+<div class="card">
+  <div class="card-hd">
+    <div class="card-num">2</div>
+    <div><div class="card-title">Locataire / Occupant principal</div>
+    <div class="card-sub">Identité · Situation · Ressources</div></div>
+  </div>
+  <div class="card-body">
+
+    <div class="section">
+      <div class="section-title">Identité</div>
+      <div class="g3">
+        <div class="fd"><label class="lb">Nom</label><input type="text" id="l_nom"></div>
+        <div class="fd"><label class="lb">Prénom</label><input type="text" id="l_prn"></div>
+        <div class="fd"><label class="lb">Date de naissance</label><input type="date" id="l_ddn"></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">Téléphone</label><input type="tel" id="l_tel"></div>
+        <div class="fd"><label class="lb">E-mail</label><input type="email" id="l_mail"></div>
+        <div class="fd"><label class="lb">Statut dans le logement</label>
+          <select id="l_stat">
+            <option>Locataire</option><option>Propriétaire occupant</option>
+            <option>Hébergé à titre gratuit</option><option>Occupant sans titre</option>
+          </select></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">Situation familiale</label><input type="text" id="l_fam" placeholder="Célibataire, marié(e)…"></div>
+        <div class="fd"><label class="lb">Enfants à charge</label><input type="number" id="l_enf" min="0" placeholder="0"></div>
+        <div class="fd"><label class="lb">Situation professionnelle</label><input type="text" id="l_pro" placeholder="Salarié, retraité…"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Ressources financières</div>
+      <div class="g3">
+        <div class="fd"><label class="lb">Ressources mensuelles nettes (€)</label><input type="number" id="l_res" placeholder="0"></div>
+        <div class="fd"><label class="lb">Revenu fiscal N-1 (€)</label><input type="number" id="l_rfr" placeholder="0"></div>
+        <div class="fd"><label class="lb">Mensualités prêt (€)</label><input type="number" id="l_men" placeholder="0"></div>
+      </div>
+      <div class="fd" style="margin-top:10px"><label class="lb">Projet résidentiel / travaux envisagés</label>
+        <textarea id="l_prj" rows="2"></textarea></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Autres occupants</div>
+      <div id="occs-list"></div>
+      <button id="btn-add-occ" style="margin-top:6px;padding:9px 16px;border:1.5px dashed var(--border);
+        border-radius:6px;background:none;cursor:pointer;font-size:13px;color:var(--b);font-weight:700">
+        + Ajouter un occupant</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ 3. BIEN ═══════ -->
+<div class="card">
+  <div class="card-hd">
+    <div class="card-num">3</div>
+    <div><div class="card-title">Identification du bien</div>
+    <div class="card-sub">Localisation · Configuration · Équipements · Énergie · Mesures</div></div>
+  </div>
+  <div class="card-body">
+
+    <div class="section">
+      <div class="section-title">Localisation</div>
+      <div class="g2">
+        <div class="fd"><label class="lb">N° et voie</label><input type="text" id="b_rue"></div>
+        <div class="fd"><label class="lb">Lieu-dit / Localité</label><input type="text" id="b_lieu"></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">Code postal</label><input type="text" id="b_cp"></div>
+        <div class="fd"><label class="lb">Ville</label><input type="text" id="b_vil"></div>
+        <div class="fd"><label class="lb">Période de construction</label>
+          <select id="b_per">
+            <option>Avant 1949</option><option>1949–1974</option>
+            <option>1975–1989</option><option>1990–2005</option><option>Après 2005</option>
+          </select></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Configuration du bien</div>
+
+      <label class="lb">Type d'habitat</label>
+      <div class="sel-grid" id="type-grid">
+        <button class="sel-btn on" data-type="m" type="button">
+          <div class="ic">🏠</div>
+          <div class="nm">Maison individuelle</div>
+          <div class="ds">Extérieur · toiture · garage</div>
+        </button>
+        <button class="sel-btn" data-type="a" type="button">
+          <div class="ic">🏢</div>
+          <div class="nm">Appartement</div>
+          <div class="ds">Intérieur · parties communes</div>
+        </button>
+      </div>
+
+      <div style="margin-top:14px">
+        <label class="lb">Nombre de chambres</label>
+        <div class="nb-row" id="nb-row">
+          <button class="nb-btn" data-n="0" type="button">0</button>
+          <button class="nb-btn" data-n="1" type="button">1</button>
+          <button class="nb-btn on" data-n="2" type="button">2</button>
+          <button class="nb-btn" data-n="3" type="button">3</button>
+          <button class="nb-btn" data-n="4" type="button">4</button>
+          <button class="nb-btn" data-n="5" type="button">5</button>
+          <button class="nb-btn" data-n="6" type="button">6</button>
+        </div>
+      </div>
+
+      <div class="g3" style="margin-top:12px">
+        <div class="fd"><label class="lb">Typologie</label>
+          <select id="b_typo"><option>T1</option><option>T2</option><option selected>T3</option>
+            <option>T4</option><option>T5</option><option>T6+</option></select></div>
+        <div class="fd"><label class="lb">Surface habitable (m²)</label><input type="number" id="b_surf" placeholder="0"></div>
+        <div class="fd"><label class="lb">Nb pièces principales</label><input type="number" id="b_npp" min="0" placeholder="0"></div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label class="lb">Pièces qui seront inspectées</label>
+        <div class="pieces-wrap" id="pieces-preview"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Équipements sanitaires</div>
+      <div class="g3">
+        <div class="fd"><label class="lb">Cuisine</label>
+          <select id="b_cui"><option>Présente</option><option>Absente</option></select></div>
+        <div class="fd"><label class="lb">Évier</label>
+          <select id="b_ev"><option>Bon état</option><option>Défectueux</option><option>Absent</option></select></div>
+        <div class="fd"><label class="lb">Appareil de cuisson</label>
+          <select id="b_ac"><option>Présent</option><option>Absent</option></select></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">Baignoire / Douche</label>
+          <select id="b_bd"><option>Baignoire</option><option>Douche</option><option>Les deux</option><option>Absent</option></select></div>
+        <div class="fd"><label class="lb">WC</label>
+          <select id="b_wc"><option>Intérieur séparé</option><option>Dans SdB</option><option>Extérieur commun</option></select></div>
+        <div class="fd"><label class="lb">Eau chaude sanitaire</label>
+          <select id="b_ecs"><option>Présente</option><option>Absente</option></select></div>
+      </div>
+      <div class="g3" style="margin-top:10px">
+        <div class="fd"><label class="lb">VMC cuisine</label>
+          <select id="b_vmc_c"><option>Oui</option><option>Non</option></select></div>
+        <div class="fd"><label class="lb">VMC salle de bain</label>
+          <select id="b_vmc_s"><option>Oui</option><option>Non</option></select></div>
+        <div class="fd"><label class="lb">Accès PMR</label>
+          <select id="b_pmr"><option>Oui</option><option>Non</option></select></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Énergie &amp; Réseaux</div>
+      <div class="g4">
+        <div class="fd"><label class="lb">Gaz</label>
+          <select id="b_gaz"><option>Oui</option><option>Non</option></select></div>
+        <div class="fd"><label class="lb">Électricité</label>
+          <select id="b_ele"><option>Oui</option><option>Non</option></select></div>
+        <div class="fd"><label class="lb">Linky</label>
+          <select id="b_lnk"><option>Oui</option><option>Non</option></select></div>
+        <div class="fd"><label class="lb">Solaire</label>
+          <select id="b_sol"><option>Non</option><option>Oui</option></select></div>
+      </div>
+      <div class="g2" style="margin-top:10px">
+        <div class="fd"><label class="lb">Type de chauffage</label>
+          <input type="text" id="b_chauf" placeholder="Collectif, électrique, gaz…"></div>
+        <div class="fd"><label class="lb">Valeur DPE (kWh/m²/an)</label>
+          <input type="number" id="b_dpe_val" placeholder="Ex : 380"></div>
+      </div>
+      <div class="g2" style="margin-top:10px">
+        <div class="fd"><label class="lb">Classe DPE</label>
+          <select id="b_dpe_cl">
+            <option value="">—</option>
+            <option>A</option><option>B</option><option>C</option>
+            <option>D</option><option>E</option><option>F</option><option>G</option>
+          </select></div>
+        <div class="fd"><label class="lb">Observations énergie</label>
+          <input type="text" id="b_enob"></div>
+      </div>
+      <div class="flag-dpe" id="flag-dpe">
+        <strong>⚠️ NON-DÉCENCE ÉNERGÉTIQUE — Art. 3 bis — Décret n°2021-872</strong><br>
+        DPE &gt; 450 kWh/m²/an ou classe F/G — logement présumé non décent depuis le 01/01/2023 (loi Climat et Résilience).
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">📐 Mesures terrain — Hygrométrie &amp; Thermométrie</div>
+      <div style="font-size:11px;color:var(--mu);margin-bottom:10px;font-style:italic">
+        Valeurs mesurées sur site. Le point de rosée est calculé automatiquement.</div>
+      <div class="mes-grid">
+        <div class="mes-card">
+          <div class="lb" style="color:var(--bd);margin-bottom:6px">Humidité relative</div>
+          <input class="mes-inp" type="number" id="m_hr" min="0" max="100" placeholder="—">
+          <div class="mes-unit">HR %</div>
+        </div>
+        <div class="mes-card">
+          <div class="lb" style="color:var(--bd);margin-bottom:6px">T° ambiante</div>
+          <input class="mes-inp" type="number" id="m_ta" min="-20" max="60" placeholder="—">
+          <div class="mes-unit">°C ambiant</div>
+        </div>
+        <div class="mes-card">
+          <div class="lb" style="color:var(--bd);margin-bottom:6px">T° paroi (IR)</div>
+          <input class="mes-inp" type="number" id="m_tp" min="-20" max="60" placeholder="—">
+          <div class="mes-unit">°C paroi</div>
+        </div>
+      </div>
+      <div class="rosee" id="rosee-box">
+        <span style="font-size:22px">💧</span>
+        <div>
+          <div style="font-size:10px;font-weight:800;color:var(--mu);text-transform:uppercase">Point de rosée calculé</div>
+          <span id="rosee-val" class="rosee-val">—</span> °C
+        </div>
+        <div style="flex:1;margin-left:12px" id="rosee-interp"></div>
+      </div>
+      <div class="g2" style="margin-top:10px">
+        <div class="fd"><label class="lb">Appareil utilisé</label>
+          <input type="text" id="m_app" placeholder="TESTO 625, FLUKE…"></div>
+        <div class="fd"><label class="lb">Localisation des mesures</label>
+          <input type="text" id="m_loc" placeholder="Chambre nord, angle mur/sol…"></div>
+      </div>
+      <div class="fd" style="margin-top:10px"><label class="lb">Observations hygrothermiques</label>
+        <textarea id="m_obs" rows="2" placeholder="Condensation, moisissures, odeurs…"></textarea></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Observations générales sur le bien</div>
+      <textarea id="b_obs" rows="3" placeholder="État général, points d'attention…"></textarea>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ 4. PHOTOS ═══════ -->
+<div class="card">
+  <div class="card-hd">
+    <div class="card-num">4</div>
+    <div><div class="card-title">Illustrations photographiques</div>
+    <div class="card-sub">Min. 2 photos par pièce pour opposabilité</div></div>
+  </div>
+  <div class="card-body">
+    <div class="alert">📸 Minimum 2 photos + commentaire par pièce sont recommandées pour la valeur probante du rapport.</div>
+    <div id="photos-container"></div>
+  </div>
+</div>
+
+<!-- ═══════ 5. CONSTATATIONS ═══════ -->
+<div class="card">
+  <div class="card-hd">
+    <div class="card-num">5</div>
+    <div><div class="card-title">Constatations techniques</div>
+    <div class="card-sub">Grille ANAH — Sections A à L — NE / AD / ND</div></div>
+  </div>
+  <div class="card-body">
+    <div class="legend">
+      <strong>Légende de notation</strong>
+      <div class="leg-row">
+        <span class="badge b0">0 — Bon état</span>
+        <span class="badge b1">1 — Intervention nécessaire</span>
+        <span class="badge b2">2 — Mixte</span>
+        <span class="badge b3">3 — Remplacement</span>
+        <span class="badge bx">SO — Sans objet</span>
+        <span class="badge bx">NV — Non visité</span>
+      </div>
+      <div class="leg-row">
+        <span class="badge ba">AD 0,25 — Ponctuel</span>
+        <span class="badge ba">AD 0,50 — Important</span>
+        <span class="badge ba">AD 1,00 — Généralisé</span>
+      </div>
+    </div>
+    <div id="constats-container"></div>
+  </div>
+</div>
+
+<!-- ═══════ 6. CONCLUSIONS ═══════ -->
+<div class="card">
+  <div class="card-hd">
+    <div class="card-num">6</div>
+    <div><div class="card-title">Conclusions &amp; Préconisations</div>
+    <div class="card-sub">Cadre juridique · IDG · CI · Préconisations · Signatures</div></div>
+  </div>
+  <div class="card-body">
+
+    <div class="section">
+      <div class="section-title">Cadre juridique &amp; Objet de la mission</div>
+      <div class="mission-btns">
+        <button class="mission-btn" id="btn-dec">⚖️ Décence</button>
+        <button class="mission-btn" id="btn-ins">🏥 Insalubrité</button>
+        <button class="mission-btn" id="btn-mix">📋 Mission mixte</button>
+      </div>
+      <div class="mission-info" id="mi-dec" style="border-color:#1855A0;background:var(--bl)">
+        <strong style="color:var(--bd)">Référentiel — Décence</strong><br>
+        Article 6 loi n°89-462 du 6 juillet 1989 · Décret n°2002-120 du 30 janvier 2002.
+      </div>
+      <div class="mission-info" id="mi-ins" style="border-color:var(--r);background:var(--rl)">
+        <strong style="color:#7B0000">Référentiel — Insalubrité</strong><br>
+        Articles L.1331-22 et L.1331-23 du Code de la santé publique.
+      </div>
+      <div class="mission-info" id="mi-mix" style="border-color:var(--a);background:var(--al)">
+        <strong style="color:#5a3800">Référentiel — Mission mixte</strong><br>
+        Art. 6 loi n°89-462 · Décret n°2002-120 · Art. L.1331-22 et L.1331-23 CSP.
+      </div>
+      <div style="margin-top:12px;padding:12px 14px;background:var(--nl);border:1px solid var(--border);border-radius:6px">
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:6px">
+          ⚠️ Limites de la mission
+        </div>
+        <p style="font-size:12px;line-height:1.6;margin-bottom:8px">
+          Diagnostic <strong>visuel et non destructif</strong>. Constats établis à la date de visite dans les conditions d'accès offertes.
+        </p>
+        <div class="fd"><label class="lb">Précisions sur les conditions de visite</label>
+          <textarea id="cj_cond" rows="2" placeholder="Parties non accessibles, mobilier encombrant…"></textarea></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Évaluation finale — IDG &amp; Coefficient d'Insalubrité</div>
+      <div class="dmdg-row">
+        <div class="dmdg">
+          <div class="dmdg-lbl">DM — Éléments majeurs</div>
+          <div class="dmdg-val" id="res-dm">—</div>
+        </div>
+        <div class="dmdg">
+          <div class="dmdg-lbl">DG — Dégradation générale</div>
+          <div class="dmdg-val" id="res-dg">—</div>
+        </div>
+        <div class="dmdg" style="background:var(--rl)">
+          <div class="dmdg-lbl">ID — Indicateur ANAH</div>
+          <div class="dmdg-val" id="res-id" style="color:var(--r)">—</div>
+          <div style="font-size:9px;color:var(--mu)">1−√(((1−DM)²+(1−DG)²)/2)</div>
+        </div>
+      </div>
+      <div class="ci-box">
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--mu)">Coefficient d'Insalubrité (CI)</div>
+        <div class="ci-val" id="res-ci">—</div>
+        <div class="ci-bar"><div class="ci-fill" id="res-fil" style="width:0%"></div></div>
+        <div class="ci-verd" id="res-verd">—</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+          <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#e5f3dc;color:#256B10">0–0,30 · Manquement</span>
+          <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#fdf3dc;color:#9A6200">0,30–0,40 · Intermédiaire</span>
+          <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#faeaea;color:#AE1E1E">0,40–0,60 · Avérée</span>
+          <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#7B0000;color:#fff">0,60–1 · Grave</span>
+        </div>
+        <div style="font-size:9px;color:var(--mu);margin-top:6px;font-style:italic">Réf. Guide Grille ANAH · Art. L.1331-22 CSP</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr>
+            <th>Section</th><th>NE max</th><th>AD max</th><th>PE</th>
+            <th>Σ ND</th><th>Σ NDM</th><th>Coeff.</th>
+          </tr></thead>
+          <tbody id="rec-body"></tbody>
+          <tfoot id="rec-foot"></tfoot>
+        </table>
+      </div>
+      <button id="btn-calc" style="margin-top:10px;padding:10px 20px;background:var(--b);color:#fff;
+        border:none;border-radius:7px;font-size:13px;font-weight:800;cursor:pointer">
+        🔄 Recalculer le coefficient
+      </button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Tableau de préconisations</div>
+      <div style="font-size:11px;color:var(--mu);margin-bottom:8px;font-style:italic">
+        Réf. CPS Sec. 6 — Désordre → Travaux → Urgence → Caractère remédiable</div>
+      <div style="overflow-x:auto">
+        <table class="prec-tbl">
+          <thead><tr>
+            <th style="width:55px">Section</th><th>Désordre / Pathologie</th>
+            <th>Préconisation technique</th><th style="width:110px">Urgence</th>
+            <th style="width:100px">Remédiable</th><th style="width:30px"></th>
+          </tr></thead>
+          <tbody id="prec-body"></tbody>
+        </table>
+      </div>
+      <button id="btn-add-prec" class="prec-add-btn" style="margin-top:8px;padding:8px 16px;
+        border:1.5px dashed var(--border);border-radius:6px;background:none;cursor:pointer;
+        font-size:12px;color:var(--b);font-weight:700">+ Ajouter une préconisation</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Besoins exprimés par l'occupant</div>
+      <textarea id="cn_bs" rows="3" placeholder="Besoins et demandes du porteur de projet…"></textarea>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Observations et synthèse de l'expert</div>
+      <textarea id="cn_ob" rows="4" placeholder="Synthèse technique, orientations administratives (ARS, relogement, ANAH…)"></textarea>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Consentement RGPD — Règlement UE 2016/679</div>
+      <div class="rgpd-box">
+        <strong>Responsable :</strong> CEL-47 · Denis Charbonnier · 166 ch. de Lamaurague · 47310 Laplume<br>
+        <strong>Finalités :</strong> Expertise technique, rapport, dossiers ANAH/CAF/collectivité.<br>
+        <strong>Conservation :</strong> 5 ans · <strong>Droits :</strong> Accès, rectification, effacement — par courriel à CEL-47.
+      </div>
+      <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:10px">
+        <input type="checkbox" id="rgpd" style="width:auto;height:auto">
+        <span><strong>Consentement RGPD recueilli</strong></span>
+      </label>
+      <div class="g2">
+        <div class="fd"><label class="lb">Signataire</label><input type="text" id="rgpd_sig"></div>
+        <div class="fd"><label class="lb">Date</label><input type="date" id="rgpd_dt"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Signatures &amp; Clôture</div>
+      <table class="sig-tbl">
+        <tr>
+          <td><strong>L'expert (CEL-47)</strong><br>Denis Charbonnier
+            <div class="fd" style="margin-top:8px"><label class="lb">Date</label><input type="date" id="sg_ex"></div>
+            <div class="sig-box"></div></td>
+          <td><strong>Le demandeur</strong>
+            <div class="fd" style="margin-top:8px"><label class="lb">Date</label><input type="date" id="sg_dm"></div>
+            <div class="sig-box"></div></td>
+          <td><strong>Le locataire / occupant</strong>
+            <div class="fd" style="margin-top:8px"><label class="lb">Date</label><input type="date" id="sg_lo"></div>
+            <div class="sig-box"></div></td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="padding:12px 14px;background:var(--nl);border:1px solid var(--border);border-radius:6px;
+      font-size:10px;color:var(--mu);font-style:italic;text-align:center;margin-top:10px">
+      Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état,
+      vis-à-vis des tiers, que par publication ou communication in extenso.<br>
+      CEL-47 · Denis Charbonnier · 166 chemin de Lamaurague · 47310 Laplume
+    </div>
+    <div class="prt-footer" style="display:none" id="prt-footer"></div>
+
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- BARRE BAS -->
+<div class="bot-bar">
+  <button class="bot-btn brown" id="bot-prj">📁 Projets</button>
+  <button class="bot-btn green" id="bot-sv">💾 Sauvegarder JSON</button>
+  <button class="bot-btn teal" id="bot-pr">🖨️ Imprimer</button>
+  <div class="bot-as"><span class="dot"></span>Autosauvegarde · <span id="as-time">—</span></div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   DONNÉES GRILLE ANAH COMPLÈTE — SECTIONS A À L
+   Toutes les sections, tous les groupes
+════════════════════════════════════════════════ */
+var SECS = [
+  {id:'A', lb:'Gros œuvre & accès', ar:'Art. 2 — Décret n°2021-872 du 30 juin 2021', gs:[
+    {id:'A1', lb:'Fondations', mo:true, it:["Présence d'un vide sanitaire accessible","Dispositif protection eaux de ruissellement","Dispositif protection remontées capillaires"]},
+    {id:'A2', lb:'Cours & Accès', mo:true, it:["Évacuation eaux de ruissellement par gravité","Revêtements sols extérieurs"]},
+    {id:'A3', lb:'Murs', it:["Bon état murs porteurs","Bon état murs périphériques","Bon état linteaux","Altération structurelle matériaux","Présence de fissures (lézardes, structurelles)","Infiltrations visibles par les murs","Étanchéité enduits et revêtements","Décollement enduits intérieurs","Décollement enduits extérieurs","Présence de remontées capillaires"]},
+    {id:'A4', lb:'Planchers', it:["Flexion anormale des planchers","Plancher ou plafond menaçant de s'effondrer","Autres désordres planchers (carrelage, insectes…)","Infiltrations visibles par les plafonds"]},
+    {id:'A5', lb:'Surfaces & Finitions', it:["Revêtements sols intérieurs","Revêtement murs intérieurs","Revêtement plafonds","Revêtements plinthes","Infiltrations visibles par les sols intérieurs"]},
+    {id:'A6', lb:'Balcons', it:["Garde-corps conformes","Fixation garde-corps","Présence de fissures structurelles","Pente pour l'écoulement des eaux","Armatures acier visibles sous béton"]},
+    {id:'A7', lb:'Escaliers', it:["Stabilité des marches","Marches de moins de 30 cm de hauteur","Mains courantes conformes","Fixation mains courantes"]},
+    {id:'A8', lb:'Charpente', mo:true, it:["Altération liaisons et/ou encastrements","Déformation anormale de la charpente"]},
+    {id:'A9', lb:'Toiture', mo:true, it:["Présence d'infiltrations visibles par le toit","Inclinaison anormale","Présence de mousse et lichens en abondance","Intégrité des solins","Présence de chapeaux de toiture","Altération matériaux de couverture"]},
+    {id:'A10', lb:'Gouttières & chéneaux', mo:true, it:["Encombrement anormal","Présence de chocs","Fuites, fissures ou corrosion","Fixations correctes","Absence piquages EU vers EP","Pentes vers les descentes","Évacuation eaux pluviales correcte"]}
+  ]},
+  {id:'B', lb:'Menuiseries · Étanchéité · Ventilation · Finitions', ar:'Art. 2 — suite', gs:[
+    {id:'B11', lb:'Menuiseries extérieures', it:["Hauteur d'allège conforme","Portes extérieures : protection contre les infiltrations","Fenêtres : protection contre les infiltrations","Étanchéité à l'air des portes extérieures","Étanchéité à l'air des fenêtres","Présence de seuil aux portes"]},
+    {id:'B12', lb:'Ventilations', it:["Logement protégé des infiltrations d'air parasites","Présence d'une ventilation naturelle","Présence d'une VMC","Pièces principales avec ouverture à l'air libre","Pièces humides avec dispositif d'évacuation de l'humidité","Renouvellement d'air adapté"]},
+    {id:'B13', lb:'Luminosité naturelle', it:["Pièces principales : éclairage naturel suffisant et ouvrant à l'air libre"]},
+    {id:'B14', lb:'Menuiseries parties communes', ao:true, it:["Porte d'entrée immeuble","SAS, porche","Fenêtres parties communes"]},
+    {id:'B15', lb:'Finitions parties communes', ao:true, it:["Revêtements sols parties communes","Revêtement murs parties communes","Revêtement plafonds parties communes","Revêtements plinthes parties communes"]}
+  ]},
+  {id:'C', lb:'Canalisations · Réseaux', ar:'Art. 2 — suite', gs:[
+    {id:'C16', lb:'Installations électriques', it:["Branchements et installations électriques conformes aux normes de sécurité"]},
+    {id:'C17', lb:'Installations de gaz', it:["Branchements et installations de gaz conformes aux normes de sécurité"]},
+    {id:'C18', lb:"Canalisations d'eau", it:["Canalisations eau réseau public conformes aux règlements sanitaires","Réseau assainissement collectif conforme","Réseau assainissement non collectif conforme"]}
+  ]},
+  {id:'D', lb:'Autres locaux accessoires', ar:'Art. 2 — suite', gs:[
+    {id:'D1', lb:'Locaux annexes', it:["Sols sur cour collective","WC commun (le cas échéant)","Garage","Place de stationnement","Locaux communs (cave, sous-sol, vélos, poubelles)","Éléments façade extérieure (auvents, marquises, volets)"]}
+  ]},
+  {id:'E', lb:'Chauffage', ar:'Art. 3 — Décret n°2021-872 du 30 juin 2021', gs:[
+    {id:'E1', lb:'Systèmes de chauffage', it:["Chauffage à eau chaude centralisé collectif","Chauffage à eau chaude centralisé individuel"]}
+  ]},
+  {id:'F', lb:"Alimentation en eau", ar:'Art. 3 — suite', gs:[
+    {id:'F1', lb:"Réseaux d'eau", it:["Arrivée d'eau potable avec évacuation intérieure","Distribution, débit et pression suffisants","Évacuation eaux ménagères avec siphons","Évacuation eaux vannes avec siphons","Absence de refoulement des odeurs"]}
+  ]},
+  {id:'G', lb:'Équipements de confort', ar:'Art. 3 — suite', gs:[
+    {id:'G1', lb:'Équipements sanitaires & cuisine', it:["Présence d'une cuisine ou coin cuisine","Évier raccordé EC/EF avec évacuation","Production d'eau chaude sanitaire","Groupe de sécurité sur ballon ECS","Équipement toilette corporelle (baignoire ou douche)","Toilette corporelle alimentée EC et EF","Toilette corporelle avec évacuation eaux usées","WC séparé de la pièce des repas","WC extérieur commun accessible","Aménagement pour appareil de cuisson"]}
+  ]},
+  {id:'H', lb:'Installations électriques', ar:'Art. 3 — suite', gs:[
+    {id:'H1', lb:'Électricité', it:["Éclairage suffisant de toutes les pièces","Fonctionnement des appareils ménagers courants","Installation conforme aux besoins normaux","Appareil général de commande et de protection","Prise de terre avec protection différentielle","Liaison équipotentielle (local baignoire/douche)","Respect des règles de volumes (salle d'eau)","Tableau de répartition avec dispositifs de protection","Absence de contact avec parties actives nues","Dispositif différentiel 30 mA présent","Absence de matériels vétustes ou interdits","Absence de matériels cassés","Absence de circuits sous-dimensionnés"]}
+  ]},
+  {id:'I', lb:"Consommation d'énergie (DPE)", ar:'Art. 3 bis — Décret n°2021-872', gs:[
+    {id:'I1', lb:'Diagnostic de Performance Énergétique', it:["DPE à jour au 01/01/2023 présent","DPE < 450 kWh/m²/an en énergie finale","DPE > 450 kWh/m²/an — logement énergivore","Audit énergétique réalisé"]}
+  ]},
+  {id:'J', lb:'Normes dimensionnelles', ar:'Art. 4 — Décret n°2021-872', gs:[
+    {id:'J1', lb:'Dimensions réglementaires', it:["Au moins une pièce principale ≥ 9m² et hauteur ≥ 2,20m","Une pièce principale d'au moins 20m³","Surface et volume habitables ≥ 14m² et 33m³ par habitant","Suroccupation de l'habitation constatée"]}
+  ]},
+  {id:'K', lb:'Sécurité des occupants', ar:'Art. 5 — Décret n°2020-1711', gs:[
+    {id:'K1', lb:'Arrêtés & sécurité', it:["Arrêté de mise en sécurité et de péril (art. L.511-1 CCH)","Traitement de l'insalubrité (art. L.511-1 CCH)","Manquement règles d'hygiène / non-respect du RSD"]}
+  ]},
+  {id:'L', lb:'Risques sanitaires', ar:'Art. 5 — suite', gs:[
+    {id:'L1', lb:'Plomb', it:["Biens avant 1949 : CREP présent","Si CREP positif : recommandations appliquées","Sinon : prévoir réalisation par personne certifiée"]},
+    {id:'L2', lb:'Amiante', it:["Biens avant 1997 : rapport de repérage amiante présent"]},
+    {id:'L3', lb:'Parasites', it:["Absence d'animaux nuisibles (rats, souris…)","Absence de parasites (puces de lit, cafards, punaises…)","Absence de dégradation par insectes xylophages ou champignons"]},
+    {id:'L4', lb:'Incendie', it:["DAAF (détecteur avertisseur autonome de fumée) présent","Extincteur présent","Détecteur de monoxyde de carbone présent"]},
+    {id:'L5', lb:'ERNMT', it:["État des risques naturels et technologiques présent"]},
+    {id:'L6', lb:'Déchets', it:["Absence de déchets / ordures / encombrants (int. ou ext.)"]},
+    {id:'L7', lb:'Bruits', it:["Absence de sources de nuisances sonores"]}
+  ]}
+];
+
+/* ════════════════════════════
+   ÉTAT GLOBAL
+════════════════════════════ */
+var APP = {
+  type: 'm',
+  nbCh: 2,
+  pieces: [],
+  photos: {},
+  scores: {},
+  precs: [],
+  occN: 0,
+  mission: ''
+};
+
+/* ════════════════════════════
+   UTILS
+════════════════════════════ */
+function gv(id) { var e = document.getElementById(id); return e ? e.value : ''; }
+function sv(id, val) { var e = document.getElementById(id); if (e && val != null) e.value = val; }
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
+/* ════════════════════════════
+   PIÈCES
+════════════════════════════ */
+function mkPieces() {
+  var p = [
+    {id:'sej', lb:'Séjour / Salon'},
+    {id:'cui', lb:'Cuisine'},
+    {id:'sdb', lb:'Salle de bain'},
+    {id:'wc',  lb:'WC'}
+  ];
+  for (var i = 1; i <= APP.nbCh; i++) {
+    p.push({id: 'ch' + i, lb: 'Chambre ' + i});
+  }
+  if (APP.type === 'm') {
+    p.push({id:'ext', lb:'Extérieur'});
+    p.push({id:'gar', lb:'Garage / Annexe'});
+  } else {
+    p.push({id:'com', lb:'Parties communes'});
+  }
+  APP.pieces = p;
+  p.forEach(function(pc) {
+    if (!APP.photos[pc.id]) APP.photos[pc.id] = [];
+  });
+}
+
+function renderPiecesPreview() {
+  var el = document.getElementById('pieces-preview');
+  if (!el) return;
+  el.innerHTML = APP.pieces.map(function(p) {
+    return '<span class="piece-tag">' + p.lb + '</span>';
+  }).join('');
+}
+
+/* ════════════════════════════
+   SÉLECTION TYPE / CHAMBRES
+════════════════════════════ */
+function selType(t) {
+  APP.type = t;
+  document.querySelectorAll('#type-grid button.sel-btn').forEach(function(btn) {
+    btn.classList.toggle('on', btn.dataset.type === t);
+  });
+  mkPieces();
+  renderPiecesPreview();
+  renderPhotos();
+  renderConstats();
+}
+
+function selCh(n) {
+  APP.nbCh = n;
+  document.querySelectorAll('#nb-row button.nb-btn').forEach(function(btn) {
+    btn.classList.toggle('on', parseInt(btn.dataset.n) === n);
+  });
+  mkPieces();
+  renderPiecesPreview();
+  renderPhotos();
+  renderConstats();
+}
+
+/* ════════════════════════════
+   OCCUPANTS
+════════════════════════════ */
+function addOcc() {
+  APP.occN++;
+  var n = APP.occN;
+  var div = document.createElement('div');
+  div.className = 'occ-blk';
+  div.id = 'occ' + n;
+  div.innerHTML =
+    '<div class="occ-hd">Occupant ' + n +
+    '<button class="occ-del" data-occ="' + n + '">✕</button></div>' +
+    '<div class="g3">' +
+    '<div class="fd"><label class="lb">Nom</label><input type="text" id="oc' + n + '_nom"></div>' +
+    '<div class="fd"><label class="lb">Prénom</label><input type="text" id="oc' + n + '_prn"></div>' +
+    '<div class="fd"><label class="lb">Lien de parenté</label><input type="text" id="oc' + n + '_lien" placeholder="Conjoint, enfant…"></div>' +
+    '</div>';
+  document.getElementById('occs-list').appendChild(div);
+  // Wire delete button
+  div.querySelector('.occ-del').addEventListener('click', function() {
+    document.getElementById('occ' + n).remove();
+  });
+}
+
+/* ════════════════════════════
+   PHOTOS
+════════════════════════════ */
+function renderPhotos() {
+  var container = document.getElementById('photos-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  APP.pieces.forEach(function(pc) {
+    var phs = APP.photos[pc.id] || [];
+    var ok = phs.length >= 2;
+    var section = document.createElement('div');
+    section.className = 'photo-section';
+
+    var label = document.createElement('div');
+    label.className = 'photo-label';
+    label.innerHTML = (ok ? '<span style="color:var(--g)">✅</span>' : '<span style="color:var(--a)">📷</span>') +
+      ' <span>' + pc.lb + '</span>' +
+      ' <span style="font-size:11px;font-weight:400;color:var(--mu)">(' + phs.length + ' photo' + (phs.length !== 1 ? 's' : '') + ')</span>';
+    section.appendChild(label);
+
+    // Zone d'ajout
+    var addZone = document.createElement('label');
+    addZone.className = 'photo-add';
+    addZone.innerHTML =
+      '<div style="font-size:20px;margin-bottom:4px">📷</div>' +
+      '<div style="font-size:12px;font-weight:700;color:var(--mu)">Appuyer pour ajouter des photos — ' + pc.lb + '</div>' +
+      '<div style="font-size:10px;color:var(--mu);margin-top:2px">Appareil photo ou galerie</div>';
+    var inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = 'image/*';
+    inp.multiple = true;
+    inp.className = 'photo-add-inp';
+    inp.setAttribute('capture', 'environment');
+    addZone.insertBefore(inp, addZone.firstChild);
+    section.appendChild(addZone);
+
+    // Event listener sur l'input (pas sur le label)
+    inp.addEventListener('change', (function(pid) {
+      return function(ev) { addPhoto(pid, ev); };
+    })(pc.id));
+
+    // Grille photos existantes
+    if (phs.length > 0) {
+      var grid = document.createElement('div');
+      grid.className = 'photo-grid';
+      phs.forEach(function(ph, j) {
+        var item = document.createElement('div');
+        item.className = 'photo-item';
+        item.innerHTML =
+          '<img src="' + ph.url + '" alt="">' +
+          '<button class="photo-del" data-pid="' + pc.id + '" data-idx="' + j + '">✕</button>' +
+          '<div class="photo-cap"><input type="text" placeholder="Description…" value="' + esc(ph.obs) + '" data-pid="' + pc.id + '" data-idx="' + j + '"></div>';
+        grid.appendChild(item);
+        // Wire delete
+        item.querySelector('.photo-del').addEventListener('click', function() {
+          delPhoto(pc.id, j);
+        });
+        // Wire caption
+        item.querySelector('input').addEventListener('input', function(ev) {
+          APP.photos[pc.id][j].obs = ev.target.value;
+        });
+      });
+      section.appendChild(grid);
+    }
+    container.appendChild(section);
+  });
+}
+
+function addPhoto(pid, ev) {
+  var files = Array.from(ev.target.files);
+  if (!files.length) return;
+  var processed = 0;
+  files.forEach(function(f) {
+    var r = new FileReader();
+    r.onload = function(e) {
+      if (!APP.photos[pid]) APP.photos[pid] = [];
+      APP.photos[pid].push({url: e.target.result, obs: '', num: APP.photos[pid].length + 1});
+      processed++;
+      if (processed === files.length) renderPhotos();
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = '';
+}
+
+function delPhoto(pid, idx) {
+  APP.photos[pid].splice(idx, 1);
+  APP.photos[pid].forEach(function(p, j) { p.num = j + 1; });
+  renderPhotos();
+}
+
+/* ════════════════════════════
+   CONSTATATIONS
+════════════════════════════ */
+function renderConstats() {
+  var container = document.getElementById('constats-container');
+  if (!container) return;
+  // Vider d'abord
+  container.innerHTML = '';
+  var nbP = Math.max(APP.pieces.length, 1);
+
+  // Construire chaque section séparément pour éviter les problèmes de mémoire
+  SECS.forEach(function(sec) {
+    // Vérifier si cette section est visible pour le type actuel
+    var hasVisibleGroup = false;
+    sec.gs.forEach(function(g) {
+      if (g.mo && APP.type !== 'm') return;
+      if (g.ao && APP.type !== 'a') return;
+      hasVisibleGroup = true;
+    });
+    if (!hasVisibleGroup) return;
+
+    // En-tête de section
+    var secWrap = document.createElement('div');
+    secWrap.style.marginBottom = '18px';
+
+    var secHd = document.createElement('div');
+    secHd.className = 'sec-hd';
+    secHd.innerHTML =
+      '<div class="sec-id">' + sec.id + '</div>' +
+      '<div><div class="sec-name">' + sec.lb + '</div>' +
+      '<div class="sec-ref">' + sec.ar + '</div></div>';
+    secWrap.appendChild(secHd);
+
+    // Groupes
+    sec.gs.forEach(function(g) {
+      if (g.mo && APP.type !== 'm') return;
+      if (g.ao && APP.type !== 'a') return;
+
+      var grpTitle = document.createElement('div');
+      grpTitle.className = 'grp-title';
+      grpTitle.textContent = g.lb;
+      secWrap.appendChild(grpTitle);
+
+      // Items
+      g.it.forEach(function(it, ix) {
+        var k = g.id + '_' + ix;
+        var sc = APP.scores[k] || {};
+        var cstDiv = buildCstItem(k, it, sc, nbP);
+        secWrap.appendChild(cstDiv);
+      });
+    });
+
+    container.appendChild(secWrap);
+  });
+}
+
+function buildCstItem(k, it, sc, nbP) {
+  var div = document.createElement('div');
+  div.className = 'cst-item';
+  div.id = 'cst-' + k;
+
+  var ne = sc.ne || '';
+  var ad = sc.ad || '';
+  var obs = sc.obs || '';
+
+  // Texte
+  var textDiv = document.createElement('div');
+  textDiv.className = 'cst-text';
+  textDiv.textContent = it;
+  div.appendChild(textDiv);
+
+  // Rangée NE
+  var rowNE = document.createElement('div');
+  rowNE.className = 'btn-row';
+  var keyNE = document.createElement('span');
+  keyNE.className = 'row-key';
+  keyNE.textContent = 'NE';
+  rowNE.appendChild(keyNE);
+  ['0','1','2','3','SO','NV'].forEach(function(v) {
+    var btn = document.createElement('button');
+    btn.className = 'ne-btn' + (ne === v ? ' on' : '');
+    btn.dataset.v = v;
+    btn.dataset.k = k;
+    btn.textContent = v;
+    btn.addEventListener('click', function() { setNE(k, v); });
+    rowNE.appendChild(btn);
+  });
+  div.appendChild(rowNE);
+
+  // Rangée AD
+  var rowAD = document.createElement('div');
+  rowAD.className = 'btn-row';
+  var keyAD = document.createElement('span');
+  keyAD.className = 'row-key';
+  keyAD.textContent = 'AD';
+  rowAD.appendChild(keyAD);
+  ['0.25','0.50','1.00'].forEach(function(v) {
+    var btn = document.createElement('button');
+    btn.className = 'ad-btn' + (ad === v ? ' on' : '');
+    btn.dataset.v = v;
+    btn.dataset.k = k;
+    btn.textContent = v;
+    btn.addEventListener('click', function() { setAD(k, v); });
+    rowAD.appendChild(btn);
+  });
+  div.appendChild(rowAD);
+
+  // ND info
+  var ndDiv = document.createElement('div');
+  ndDiv.className = 'nd-display';
+  ndDiv.id = 'nd-' + k;
+  if (ne && ne !== 'SO' && ne !== 'NV' && ad) {
+    ndDiv.textContent = 'ND = ' + (parseFloat(ne) * parseFloat(ad) * (nbP/5) * nbP).toFixed(3) +
+      ' · NDM = ' + (3 * nbP).toFixed(1);
+  }
+  div.appendChild(ndDiv);
+
+  // Print values (hidden on screen)
+  var pvDiv = document.createElement('div');
+  pvDiv.className = 'pv';
+  pvDiv.id = 'pv-' + k;
+  div.appendChild(pvDiv);
+
+  // Observation
+  var obsTA = document.createElement('textarea');
+  obsTA.className = 'cst-obs';
+  obsTA.rows = 2;
+  obsTA.placeholder = 'Désordres constatés · localisation…';
+  obsTA.value = obs;
+  obsTA.addEventListener('input', function() { setObs(k, this.value); });
+  div.appendChild(obsTA);
+
+  return div;
+}
+
+function setNE(k, v) {
+  if (!APP.scores[k]) APP.scores[k] = {};
+  APP.scores[k].ne = v;
+  // Update button states
+  document.querySelectorAll('.ne-btn[data-k="' + k + '"]').forEach(function(btn) {
+    btn.classList.toggle('on', btn.dataset.v === v);
+  });
+  updateND(k);
+  scheduleAutoSave();
+}
+
+function setAD(k, v) {
+  if (!APP.scores[k]) APP.scores[k] = {};
+  APP.scores[k].ad = v;
+  document.querySelectorAll('.ad-btn[data-k="' + k + '"]').forEach(function(btn) {
+    btn.classList.toggle('on', btn.dataset.v === v);
+  });
+  updateND(k);
+  scheduleAutoSave();
+}
+
+function setObs(k, v) {
+  if (!APP.scores[k]) APP.scores[k] = {};
+  APP.scores[k].obs = v;
+}
+
+function updateND(k) {
+  var sc = APP.scores[k] || {};
+  var ne = parseFloat(sc.ne);
+  var ad = parseFloat(sc.ad);
+  var nbP = Math.max(APP.pieces.length, 1);
+  var ndEl = document.getElementById('nd-' + k);
+  if (!ndEl) return;
+  if (!isNaN(ne) && !isNaN(ad)) {
+    ndEl.textContent = 'ND = ' + (ne * ad * (nbP/5) * nbP).toFixed(3) +
+      ' · NDM = ' + (3 * nbP).toFixed(1);
+  } else {
+    ndEl.textContent = '';
+  }
+}
+
+/* ════════════════════════════
+   MISSION
+════════════════════════════ */
+function selMission(m) {
+  APP.mission = m;
+  ['dec','ins','mix'].forEach(function(x) {
+    var prefix = {dec:'decence', ins:'insalubrite', mix:'mixte'}[x];
+    document.getElementById('btn-' + x).classList.toggle('on', prefix === m);
+    document.getElementById('mi-' + x).classList.toggle('on', prefix === m);
+  });
+}
+
+/* ════════════════════════════
+   MESURES TERRAIN
+════════════════════════════ */
+function calcRosee() {
+  var hr = parseFloat(document.getElementById('m_hr').value);
+  var ta = parseFloat(document.getElementById('m_ta').value);
+  var tp = parseFloat(document.getElementById('m_tp').value);
+  var box = document.getElementById('rosee-box');
+  if (isNaN(hr) || isNaN(ta)) { box.style.display = 'none'; return; }
+  var a = 17.27, b = 237.7;
+  var alpha = (a * ta) / (b + ta) + Math.log(hr / 100);
+  var rosee = (b * alpha) / (a - alpha);
+  var rv = document.getElementById('rosee-val');
+  rv.textContent = rosee.toFixed(1);
+  rv.className = 'rosee-val';
+  box.style.display = 'flex';
+  var ri = document.getElementById('rosee-interp');
+  if (!isNaN(tp)) {
+    var diff = tp - rosee;
+    if (diff < 0) {
+      rv.classList.add('err');
+      ri.innerHTML = '<strong style="color:var(--r)">⚠️ RISQUE CONDENSATION ACTIVE</strong><br>' +
+        '<span style="font-size:11px">T° paroi < Point de rosée — Risque mycologique — Réf. Art. 2 Décret 2002-120.</span>';
+    } else if (diff < 3) {
+      rv.classList.add('warn');
+      ri.innerHTML = '<strong style="color:var(--a)">⚠️ Zone à surveiller</strong><br>' +
+        '<span style="font-size:11px">Marge ' + diff.toFixed(1) + '°C — Condensation possible en variation thermique.</span>';
+    } else {
+      rv.classList.add('ok');
+      ri.innerHTML = '<span style="color:var(--g)">✅ Pas de risque immédiat (marge ' + diff.toFixed(1) + '°C)</span>';
+    }
+  } else {
+    ri.innerHTML = '<span style="font-size:11px;color:var(--mu)">Saisir T° paroi pour évaluer le risque de condensation.</span>';
+  }
+}
+
+function chkDPE() {
+  var v = parseFloat(document.getElementById('b_dpe_val').value);
+  var cl = document.getElementById('b_dpe_cl').value;
+  var flag = document.getElementById('flag-dpe');
+  var show = (!isNaN(v) && v > 450) || cl === 'F' || cl === 'G';
+  flag.style.display = show ? 'block' : 'none';
+}
+
+/* ════════════════════════════
+   PRÉCONISATIONS
+════════════════════════════ */
+function addPrec() {
+  APP.precs.push({sec:'§A', des:'', prec:'', urg:'', rem:''});
+  renderPrec();
+}
+
+function delPrec(i) {
+  APP.precs.splice(i, 1);
+  renderPrec();
+}
+
+function renderPrec() {
+  var tb = document.getElementById('prec-body');
+  if (!tb) return;
+  tb.innerHTML = '';
+  if (!APP.precs.length) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="6" style="text-align:center;color:var(--mu);font-style:italic;padding:12px">' +
+      'Aucune préconisation — cliquer sur + pour en ajouter</td>';
+    tb.appendChild(tr);
+    return;
+  }
+  APP.precs.forEach(function(p, i) {
+    var urgCls = {urgent:'urg3','3mois':'urg2','6mois':'urg1','planifie':'urg0'}[p.urg] || '';
+    var urgLbl = {urgent:'⚡ Immédiat','3mois':'3 mois','6mois':'6 mois','planifie':'Planifié'}[p.urg] || '—';
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><select data-prec="' + i + '" data-field="sec">' +
+        ['A','B','C','D','E','F','G','H','I','J','K','L'].map(function(s) {
+          return '<option value="§' + s + '"' + (p.sec === '§' + s ? ' selected' : '') + '>§' + s + '</option>';
+        }).join('') +
+      '</select></td>' +
+      '<td><input type="text" value="' + esc(p.des) + '" placeholder="Désordre…" data-prec="' + i + '" data-field="des"></td>' +
+      '<td><input type="text" value="' + esc(p.prec) + '" placeholder="Travaux préconisés…" data-prec="' + i + '" data-field="prec"></td>' +
+      '<td><select data-prec="' + i + '" data-field="urg">' +
+        '<option value="">—</option>' +
+        '<option value="urgent"' + (p.urg==='urgent'?' selected':'') + '>⚡ Immédiat</option>' +
+        '<option value="3mois"' + (p.urg==='3mois'?' selected':'') + '>3 mois</option>' +
+        '<option value="6mois"' + (p.urg==='6mois'?' selected':'') + '>6 mois</option>' +
+        '<option value="planifie"' + (p.urg==='planifie'?' selected':'') + '>Planifié</option>' +
+      '</select>' +
+      (p.urg ? '<div class="' + urgCls + '" style="font-size:10px;margin-top:2px">' + urgLbl + '</div>' : '') +
+      '</td>' +
+      '<td><select data-prec="' + i + '" data-field="rem">' +
+        '<option value="">—</option>' +
+        '<option value="oui"' + (p.rem==='oui'?' selected':'') + '>✅ Remédiable</option>' +
+        '<option value="non"' + (p.rem==='non'?' selected':'') + '>❌ Irrémédiable</option>' +
+        '<option value="partiel"' + (p.rem==='partiel'?' selected':'') + '>⚠️ Partiel</option>' +
+      '</select></td>' +
+      '<td><button data-del="' + i + '" style="background:none;border:none;cursor:pointer;color:var(--r);font-size:16px">✕</button></td>';
+    tb.appendChild(tr);
+  });
+
+  // Wire prec events
+  tb.querySelectorAll('select[data-prec], input[data-prec]').forEach(function(el) {
+    el.addEventListener('change', function() {
+      APP.precs[parseInt(el.dataset.prec)][el.dataset.field] = el.value;
+      if (el.dataset.field === 'urg') renderPrec();
+    });
+    el.addEventListener('input', function() {
+      APP.precs[parseInt(el.dataset.prec)][el.dataset.field] = el.value;
+    });
+  });
+  tb.querySelectorAll('button[data-del]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      delPrec(parseInt(btn.dataset.del));
+    });
+  });
+}
+
+/* ════════════════════════════
+   CALCUL IDG / CI
+════════════════════════════ */
+function calcSec(sec) {
+  var nbP = Math.max(APP.pieces.length, 1);
+  var sND = 0, sNDM = 0, sNDmaj = 0, sNDMmaj = 0, neM = 0, adM = 0;
+  sec.gs.forEach(function(g) {
+    if (g.mo && APP.type !== 'm') return;
+    if (g.ao && APP.type !== 'a') return;
+    var isMaj = !!g.mo;
+    g.it.forEach(function(_, ix) {
+      var k = g.id + '_' + ix;
+      var sc = APP.scores[k] || {};
+      var ne = parseFloat(sc.ne);
+      var ad = parseFloat(sc.ad);
+      if (!isNaN(ne) && !isNaN(ad)) {
+        var nd = ne * ad * (nbP / 5) * nbP;
+        var ndm = 3 * nbP;
+        sND += nd; sNDM += ndm;
+        if (isMaj) { sNDmaj += nd; sNDMmaj += ndm; }
+        if (ne > neM) neM = ne;
+        if (ad > adM) adM = ad;
+      }
+    });
+  });
+  return {
+    neM: neM, adM: adM,
+    sND: sND.toFixed(3), sNDM: sNDM.toFixed(1),
+    sNDmaj: sNDmaj.toFixed(3), sNDMmaj: sNDMmaj.toFixed(1),
+    cf: sNDM > 0 ? (sND / sNDM).toFixed(3) : '0.000'
+  };
+}
+
+function buildConclusions() {
+  var tbody = document.getElementById('rec-body');
+  var tfoot = document.getElementById('rec-foot');
+  tbody.innerHTML = '';
+  var tND = 0, tNDM = 0, tNDmaj = 0, tNDMmaj = 0;
+
+  SECS.forEach(function(sec) {
+    var hasVisible = sec.gs.some(function(g) {
+      if (g.mo && APP.type !== 'm') return false;
+      if (g.ao && APP.type !== 'a') return false;
+      return true;
+    });
+    if (!hasVisible) return;
+
+    var r = calcSec(sec);
+    tND += parseFloat(r.sND);
+    tNDM += parseFloat(r.sNDM);
+    tNDmaj += parseFloat(r.sNDmaj);
+    tNDMmaj += parseFloat(r.sNDMmaj);
+
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>§' + sec.id + ' — ' + sec.lb + '</td>' +
+      '<td>' + (r.neM || '—') + '</td>' +
+      '<td>' + (r.adM || '—') + '</td>' +
+      '<td>' + (APP.pieces.length / 5).toFixed(2) + '</td>' +
+      '<td><strong>' + r.sND + '</strong></td>' +
+      '<td>' + r.sNDM + '</td>' +
+      '<td><strong>' + r.cf + '</strong></td>';
+    tbody.appendChild(tr);
+  });
+
+  tfoot.innerHTML =
+    '<tr><td colspan="4"><strong>TOTAUX</strong></td>' +
+    '<td><strong>' + tND.toFixed(3) + '</strong></td>' +
+    '<td><strong>' + tNDM.toFixed(1) + '</strong></td>' +
+    '<td><strong>' + (tNDM > 0 ? (tND / tNDM).toFixed(3) : '—') + '</strong></td></tr>';
+
+  // Formule ANAH : ID = 1 − √(((1−DM)² + (1−DG)²) / 2)
+  var DG = tNDM > 0 ? tND / tNDM : 0;
+  var DM = tNDMmaj > 0 ? tNDmaj / tNDMmaj : DG;
+  var ID = Math.min(Math.max(1 - Math.sqrt(((1-DM)*(1-DM) + (1-DG)*(1-DG)) / 2), 0), 1);
+
+  document.getElementById('res-dm').textContent = (DM * 100).toFixed(1) + '%';
+  document.getElementById('res-dg').textContent = (DG * 100).toFixed(1) + '%';
+  document.getElementById('res-id').textContent = ID.toFixed(3);
+
+  var ciEl = document.getElementById('res-ci');
+  ciEl.textContent = ID.toFixed(3);
+
+  var fil = document.getElementById('res-fil');
+  fil.style.width = Math.min(ID / 0.8 * 100, 100) + '%';
+
+  var vt, cl, bg;
+  if (ID <= 0.30)      { vt = '✅ Manquement à la salubrité (0–0,30)'; cl = '#256B10'; bg = '#4aaa20'; }
+  else if (ID <= 0.40) { vt = '⚠️ Zone intermédiaire (0,30–0,40)';     cl = '#7a5000'; bg = '#D09020'; }
+  else if (ID <= 0.60) { vt = '🚨 Insalubrité avérée (0,40–0,60)';     cl = '#AE1E1E'; bg = '#cc3030'; }
+  else                 { vt = '🔴 Insalubrité grave (CI > 0,60)';       cl = '#7B0000'; bg = '#7B0000'; }
+
+  ciEl.style.color = cl;
+  fil.style.background = bg;
+  var verd = document.getElementById('res-verd');
+  verd.textContent = vt;
+  verd.style.color = cl;
+}
+
+/* ════════════════════════════
+   COLLECTE DONNÉES
+════════════════════════════ */
+function collectData() {
+  return {
+    v: 'CEL47-V4-2026',
+    dt: new Date().toISOString(),
+    cfg: {type: APP.type, nbCh: APP.nbCh},
+    demandeur: {
+      qual:gv('d_qual'), nom:gv('d_nom'), prn:gv('d_prn'), ddn:gv('d_ddn'),
+      tel:gv('d_tel'), mail:gv('d_mail'), sir:gv('d_sir'), adr:gv('d_adr'),
+      op:gv('d_op'), dt:gv('d_dt'), hr:gv('d_hr'), hrfin:gv('d_hrfin'),
+      exp:gv('d_exp'), org:gv('d_org'), siret:gv('d_siret'), acc:gv('d_acc'),
+      lm:gv('d_lm'), lmref:gv('d_lmref'), mot:gv('d_mot'), obs:gv('d_obs')
+    },
+    locataire: {
+      nom:gv('l_nom'), prn:gv('l_prn'), ddn:gv('l_ddn'), tel:gv('l_tel'),
+      mail:gv('l_mail'), stat:gv('l_stat'), fam:gv('l_fam'), enf:gv('l_enf'),
+      pro:gv('l_pro'), res:gv('l_res'), rfr:gv('l_rfr'), men:gv('l_men'), prj:gv('l_prj')
+    },
+    bien: {
+      rue:gv('b_rue'), lieu:gv('b_lieu'), cp:gv('b_cp'), vil:gv('b_vil'), per:gv('b_per'),
+      surf:gv('b_surf'), typo:gv('b_typo'), npp:gv('b_npp'), type:APP.type, nbCh:APP.nbCh,
+      cui:gv('b_cui'), ev:gv('b_ev'), ac:gv('b_ac'), bd:gv('b_bd'), wc:gv('b_wc'),
+      ecs:gv('b_ecs'), vmc_c:gv('b_vmc_c'), vmc_s:gv('b_vmc_s'), pmr:gv('b_pmr'),
+      gaz:gv('b_gaz'), ele:gv('b_ele'), lnk:gv('b_lnk'), sol:gv('b_sol'),
+      chauf:gv('b_chauf'), dpe_val:gv('b_dpe_val'), dpe_cl:gv('b_dpe_cl'),
+      enob:gv('b_enob'), obs:gv('b_obs')
+    },
+    photos: (function() {
+      var out = {};
+      Object.keys(APP.photos).forEach(function(pid) {
+        out[pid] = APP.photos[pid].map(function(p) {
+          return {url: p.url, obs: p.obs, num: p.num};
+        });
+      });
+      return out;
+    })(),
+    mesures: {
+      hr:gv('m_hr'), ta:gv('m_ta'), tp:gv('m_tp'),
+      app:gv('m_app'), loc:gv('m_loc'), obs:gv('m_obs')
+    },
+    scores: JSON.parse(JSON.stringify(APP.scores)),
+    precs: JSON.parse(JSON.stringify(APP.precs)),
+    mission: APP.mission,
+    cj_cond: gv('cj_cond'),
+    cn: {bs:gv('cn_bs'), ob:gv('cn_ob'), rgpd_sig:gv('rgpd_sig'), rgpd_dt:gv('rgpd_dt')}
+  };
+}
+
+/* ════════════════════════════
+   AUTOSAVE
+════════════════════════════ */
+var AS_KEY = 'cel47v4_current';
+var _asTimer = null;
+var _asSched = null;
+
+function autoSave() {
+  try {
+    var data = collectData();
+    localStorage.setItem(AS_KEY, JSON.stringify(data));
+    localStorage.setItem(AS_KEY + '_ts', new Date().toISOString());
+    var el = document.getElementById('as-time');
+    if (el) {
+      var d = new Date();
+      el.textContent = d.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+    }
+  } catch(e) { console.warn('AutoSave error:', e); }
+}
+
+function scheduleAutoSave() {
+  clearTimeout(_asSched);
+  _asSched = setTimeout(autoSave, 2000);
+}
+
+function startAutoSave() {
+  clearInterval(_asTimer);
+  _asTimer = setInterval(autoSave, 30000);
+  document.addEventListener('change', scheduleAutoSave);
+  window.addEventListener('beforeunload', autoSave);
+}
+
+/* ════════════════════════════
+   EXPORT JSON
+════════════════════════════ */
+function doSave() {
+  autoSave();
+  var data = collectData();
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  var nm = (gv('b_rue') || gv('d_nom') || 'expertise').substring(0, 16).replace(/[^a-zA-Z0-9]/g, '_');
+  a.download = 'CEL47_' + nm + '_' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+}
+
+/* ════════════════════════════
+   IMPORT JSON
+════════════════════════════ */
+function applyData(data) {
+  if (data.cfg) {
+    APP.type = data.cfg.type || 'm';
+    APP.nbCh = (data.cfg.nbCh !== undefined) ? data.cfg.nbCh : 2;
+  }
+  mkPieces();
+  selType(APP.type);
+  selCh(APP.nbCh);
+
+  if (data.demandeur) {
+    var d = data.demandeur;
+    sv('d_qual',d.qual); sv('d_nom',d.nom); sv('d_prn',d.prn); sv('d_ddn',d.ddn);
+    sv('d_tel',d.tel); sv('d_mail',d.mail); sv('d_sir',d.sir); sv('d_adr',d.adr);
+    sv('d_op',d.op); sv('d_dt',d.dt); sv('d_hr',d.hr); sv('d_hrfin',d.hrfin);
+    sv('d_exp',d.exp); sv('d_org',d.org); sv('d_siret',d.siret); sv('d_acc',d.acc);
+    sv('d_lm',d.lm); sv('d_lmref',d.lmref); sv('d_mot',d.mot); sv('d_obs',d.obs);
+  }
+  if (data.locataire) {
+    var l = data.locataire;
+    sv('l_nom',l.nom); sv('l_prn',l.prn); sv('l_ddn',l.ddn); sv('l_tel',l.tel);
+    sv('l_mail',l.mail); sv('l_stat',l.stat); sv('l_fam',l.fam); sv('l_enf',l.enf);
+    sv('l_pro',l.pro); sv('l_res',l.res); sv('l_rfr',l.rfr); sv('l_men',l.men); sv('l_prj',l.prj);
+  }
+  if (data.bien) {
+    var b = data.bien;
+    sv('b_rue',b.rue); sv('b_lieu',b.lieu); sv('b_cp',b.cp); sv('b_vil',b.vil); sv('b_per',b.per);
+    sv('b_surf',b.surf); sv('b_typo',b.typo); sv('b_npp',b.npp);
+    sv('b_cui',b.cui); sv('b_ev',b.ev); sv('b_ac',b.ac); sv('b_bd',b.bd); sv('b_wc',b.wc);
+    sv('b_ecs',b.ecs); sv('b_vmc_c',b.vmc_c); sv('b_vmc_s',b.vmc_s); sv('b_pmr',b.pmr);
+    sv('b_gaz',b.gaz); sv('b_ele',b.ele); sv('b_lnk',b.lnk); sv('b_sol',b.sol);
+    sv('b_chauf',b.chauf); sv('b_dpe_val',b.dpe_val); sv('b_dpe_cl',b.dpe_cl);
+    sv('b_enob',b.enob); sv('b_obs',b.obs);
+    chkDPE();
+  }
+  if (data.photos) {
+    Object.keys(data.photos).forEach(function(pid) { APP.photos[pid] = data.photos[pid]; });
+  }
+  if (data.mesures) {
+    var m = data.mesures;
+    sv('m_hr',m.hr); sv('m_ta',m.ta); sv('m_tp',m.tp);
+    sv('m_app',m.app); sv('m_loc',m.loc); sv('m_obs',m.obs);
+    if (m.hr || m.ta) calcRosee();
+  }
+  if (data.scores) APP.scores = JSON.parse(JSON.stringify(data.scores));
+  if (data.precs) { APP.precs = JSON.parse(JSON.stringify(data.precs)); renderPrec(); }
+  if (data.mission) selMission(data.mission);
+  if (data.cj_cond) sv('cj_cond', data.cj_cond);
+  if (data.cn) {
+    sv('cn_bs', data.cn.bs); sv('cn_ob', data.cn.ob);
+    sv('rgpd_sig', data.cn.rgpd_sig); sv('rgpd_dt', data.cn.rgpd_dt);
+  }
+  renderPhotos();
+  renderConstats();
+  renderPiecesPreview();
+  updateTitle();
+}
+
+function loadJSON(ev) {
+  var f = ev.target.files[0];
+  if (!f) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (!data.v || data.v.indexOf('CEL47') < 0) {
+        alert('Fichier non reconnu. Assurez-vous de charger un fichier CEL47_*.json');
+        return;
+      }
+      applyData(data);
+      alert('Dossier chargé avec succès.');
+      autoSave();
+    } catch(err) {
+      alert('Erreur de lecture : ' + err.message);
+    }
+    ev.target.value = '';
+  };
+  r.readAsText(f);
+}
+
+/* ════════════════════════════
+   RESTAURATION SESSION
+════════════════════════════ */
+function tryRestore() {
+  try {
+    var raw = localStorage.getItem(AS_KEY);
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    if (!data.v || data.v.indexOf('CEL47') < 0) return;
+    var hasData = (data.demandeur && (data.demandeur.nom || data.demandeur.rue)) ||
+                  (data.bien && data.bien.rue) ||
+                  (data.scores && Object.keys(data.scores).length > 0);
+    if (!hasData) return;
+    var ts = localStorage.getItem(AS_KEY + '_ts');
+    var nom = (data.demandeur && data.demandeur.nom) || (data.bien && data.bien.rue) || 'rapport en cours';
+    var tsLabel = ts ? new Date(ts).toLocaleString('fr-FR') : '';
+    if (confirm('Session précédente détectée\n\n' + nom + (tsLabel ? '\nSauvegardée le ' + tsLabel : '') + '\n\nReprendre cette session ?')) {
+      applyData(data);
+    }
+  } catch(e) { /* silent */ }
+}
+
+/* ════════════════════════════
+   GESTION PROJETS
+════════════════════════════ */
+function saveProject() {
+  var nm = prompt('Nom du projet à enregistrer :\n(ex : Dupont_Agen_47000)', localStorage.getItem('cel47v4_name') || '');
+  if (!nm) return;
+  var key = 'cel47v4_proj_' + nm.replace(/[^a-zA-Z0-9]/g, '_');
+  try {
+    var data = collectData();
+    data._projName = nm;
+    localStorage.setItem(key, JSON.stringify(data));
+    localStorage.setItem('cel47v4_name', nm);
+    alert('Projet "' + nm + '" enregistré.');
+  } catch(e) {
+    alert('Erreur : ' + e.message + '\nUtilisez le bouton JSON pour exporter.');
+  }
+}
+
+function loadProject() {
+  var keys = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (k && k.indexOf('cel47v4_proj_') === 0) keys.push(k);
+  }
+  if (!keys.length) {
+    alert('Aucun projet sauvegardé localement.\nUtilisez "Charger JSON" pour importer un fichier.');
+    return;
+  }
+  var list = keys.map(function(k, i) {
+    try { var d = JSON.parse(localStorage.getItem(k)); return (i+1) + '. ' + (d._projName || k); }
+    catch(e) { return (i+1) + '. ' + k; }
+  });
+  var choice = prompt('Projets disponibles :\n\n' + list.join('\n') + '\n\nEntrez le numéro :');
+  var idx = parseInt(choice) - 1;
+  if (isNaN(idx) || idx < 0 || idx >= keys.length) return;
+  try {
+    var data = JSON.parse(localStorage.getItem(keys[idx]));
+    applyData(data);
+    if (data._projName) localStorage.setItem('cel47v4_name', data._projName);
+    alert('Projet chargé.');
+  } catch(e) { alert('Erreur : ' + e.message); }
+}
+
+function showProjMenu() {
+  var choice = prompt('Gestion des projets :\n\n1. Enregistrer le projet en cours\n2. Charger un projet sauvegardé\n3. Importer un fichier JSON\n4. Nouveau rapport vierge\n5. Annuler\n\nEntrez 1, 2, 3, 4 ou 5 :');
+  if (choice === '1') saveProject();
+  else if (choice === '2') loadProject();
+  else if (choice === '3') document.getElementById('json-inp').click();
+  else if (choice === '4') {
+    if (confirm('Démarrer un nouveau rapport vierge ?\n\nSauvegardez votre travail avant de continuer.')) {
+      localStorage.removeItem(AS_KEY);
+      location.reload();
+    }
+  }
+}
+
+/* ════════════════════════════
+   IMPRESSION
+════════════════════════════ */
+function doPrint() {
+  buildConclusions();
+  // Afficher les valeurs imprimées
+  SECS.forEach(function(sec) {
+    sec.gs.forEach(function(g) {
+      g.it.forEach(function(_, ix) {
+        var k = g.id + '_' + ix;
+        var sc = APP.scores[k] || {};
+        var pvEl = document.getElementById('pv-' + k);
+        if (!pvEl) return;
+        var ne = sc.ne || '', ad = sc.ad || '';
+        var nbP = Math.max(APP.pieces.length, 1);
+        var pvh = '';
+        if (ne) { var cls = (ne==='SO'||ne==='NV') ? 'pvtX' : 'pvt' + ne; pvh += '<span class="pvt ' + cls + '">NE=' + ne + '</span> '; }
+        if (ad) pvh += '<span class="pvt pvtA">AD=' + ad + '</span> ';
+        if (ne && ne !== 'SO' && ne !== 'NV' && ad) {
+          var nd = (parseFloat(ne) * parseFloat(ad) * (nbP/5) * nbP).toFixed(3);
+          pvh += '<span class="pvt pvtA">ND=' + nd + '</span>';
+        }
+        pvEl.innerHTML = pvh;
+        pvEl.style.display = pvh ? 'flex' : 'none';
+      });
+    });
+  });
+  var footer = document.getElementById('prt-footer');
+  if (footer) {
+    footer.innerHTML = 'CEL-47 · Denis Charbonnier · SIRET : ' + gv('d_siret') +
+      ' · 166 chemin de Lamaurague · 47310 Laplume · Rapport du ' + gv('d_dt') +
+      (gv('b_rue') ? ' · ' + gv('b_rue') + ' ' + gv('b_cp') + ' ' + gv('b_vil') : '') +
+      '<br><em>Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso.</em>';
+  }
+  updateTitle();
+  window.print();
+  setTimeout(function() {
+    document.querySelectorAll('.pv').forEach(function(p) { p.style.display = 'none'; });
+  }, 1500);
+}
+
+/* ════════════════════════════
+   TITRE
+════════════════════════════ */
+function updateTitle() {
+  var adr = gv('b_rue') || gv('d_nom') || 'Rapport d\'Expertise';
+  document.getElementById('hdr-title').textContent = adr + ' · CEL-47 · 2026';
+}
+
+/* ════════════════════════════
+   INITIALISATION — ORDRE STRICT
+════════════════════════════ */
+
+// 1. Valeurs par défaut
+document.getElementById('d_dt').value = new Date().toISOString().slice(0, 10);
+
+// 2. Construire pièces avec valeurs par défaut
+mkPieces();
+
+// 3. Appliquer état visuel initial (type m, 2 chambres)
+selType('m');
+selCh(2);
+
+// 4. Construire sections dynamiques
+renderPiecesPreview();
+renderPhotos();
+renderConstats();
+renderPrec();
+
+// 5. Câblage boutons header
+document.getElementById('hbtn-sv').addEventListener('click', doSave);
+document.getElementById('hbtn-pr').addEventListener('click', doPrint);
+document.getElementById('hbtn-prj').addEventListener('click', showProjMenu);
+
+// 6. Câblage boutons barre bas
+document.getElementById('bot-sv').addEventListener('click', doSave);
+document.getElementById('bot-pr').addEventListener('click', doPrint);
+document.getElementById('bot-prj').addEventListener('click', showProjMenu);
+
+// 7. Câblage type habitat
+document.querySelectorAll('#type-grid button.sel-btn').forEach(function(btn) {
+  (function(b) {
+    b.addEventListener('click', function() { selType(b.dataset.type); });
+  })(btn);
+});
+
+// 8. Câblage chambres
+document.querySelectorAll('#nb-row button.nb-btn').forEach(function(btn) {
+  (function(b) {
+    b.addEventListener('click', function() { selCh(parseInt(b.dataset.n)); });
+  })(btn);
+});
+
+// 9. Câblage occupant
+document.getElementById('btn-add-occ').addEventListener('click', addOcc);
+
+// 10. Câblage mission
+document.getElementById('btn-dec').addEventListener('click', function() { selMission('decence'); });
+document.getElementById('btn-ins').addEventListener('click', function() { selMission('insalubrite'); });
+document.getElementById('btn-mix').addEventListener('click', function() { selMission('mixte'); });
+
+// 11. Câblage recalculer
+document.getElementById('btn-calc').addEventListener('click', buildConclusions);
+
+// 12. Câblage préconisations
+document.getElementById('btn-add-prec').addEventListener('click', addPrec);
+
+// 13. Câblage mesures terrain
+document.getElementById('m_hr').addEventListener('input', calcRosee);
+document.getElementById('m_ta').addEventListener('input', calcRosee);
+document.getElementById('m_tp').addEventListener('input', calcRosee);
+
+// 14. Câblage DPE
+document.getElementById('b_dpe_val').addEventListener('input', chkDPE);
+document.getElementById('b_dpe_cl').addEventListener('change', chkDPE);
+
+// 15. Input JSON caché
+var jsonInp = document.createElement('input');
+jsonInp.type = 'file';
+jsonInp.accept = '.json';
+jsonInp.id = 'json-inp';
+jsonInp.style.display = 'none';
+jsonInp.addEventListener('change', loadJSON);
+document.body.appendChild(jsonInp);
+
+// 16. Titre live
+['d_nom', 'b_rue', 'b_vil'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('input', updateTitle);
+});
+
+// 17. Autosave
+startAutoSave();
+
+// 18. Restaurer session précédente
+tryRestore();
+
+</script>
+</body>
+</html>
