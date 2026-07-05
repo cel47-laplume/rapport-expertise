@@ -1643,8 +1643,34 @@ const SECS = [
   {id:'D',lb:'Locaux accessoires',ar:'Art. 2 — suite',gs:[
     {id:'D1',lb:'Annexes',it:["Sols cour collective","WC commun","Garage","Place de stationnement","Locaux communs","Éléments façade extérieure"]}
   ]},
-  {id:'E',lb:'Chauffage',ar:'Art. 3 — Décret n°2021-872',gs:[
-    {id:'E1',lb:'Systèmes de chauffage',it:["Chauffage à eau chaude centralisé collectif","Chauffage à eau chaude centralisé individuel"]}
+  {id:'E',lb:'Chauffage',ar:'Art. 3 — Décret n°2002-120 du 30 janvier 2002',gs:[
+    {id:'E1',lb:'Chauffage à eau chaude (collectif / individuel gaz)',it:[
+      "Chauffage à eau chaude centralisé collectif — présence, état, entretien",
+      "Chaudière gaz individuelle — présence, conformité installation, attestation entretien annuel (Décret n°2009-649 du 9 juin 2009)",
+      "Chaudière fioul individuelle — présence, état cuve, attestation entretien annuel (Décret n°2009-649 du 9 juin 2009)",
+      "Cuve à fioul — type (enterrée/aérienne), certificat conformité/étanchéité (Arrêté du 1er juillet 2004)",
+      "Chaudière fioul : nota — remplacement par chaudière fioul interdit depuis le 1er juillet 2022 (Loi n°2021-1104 du 22 août 2021)"
+    ]},
+    {id:'E2',lb:'Chauffage électrique',it:[
+      "Convecteurs électriques — présence, nombre, puissance suffisante pour chaque pièce habitable",
+      "Panneaux rayonnants — présence, état, installation conforme (NF C 15-100)",
+      "Plancher chauffant électrique — présence, fonctionnement"
+    ]},
+    {id:'E3',lb:'Pompe à chaleur / Climatisation réversible',it:[
+      "PAC air/air — présence, dimensionnement adapté au logement, entretien",
+      "PAC air/eau — présence, dimensionnement adapté, attestation entretien",
+      "Climatisation réversible — capacité de chauffage vérifiée, entretien"
+    ]},
+    {id:'E4',lb:'Chauffage bois / granulés',it:[
+      "Poêle à bois ou à granulés — présence, conduit de fumée conforme (Arrêté du 22 octobre 1969)",
+      "Ramonage annuel obligatoire — attestation présente",
+      "Insert ou cheminée ouverte — présence, état du conduit, tirage"
+    ]},
+    {id:'E5',lb:'Absence ou insuffisance de chauffage',it:[
+      "Absence totale de dispositif de chauffage — non-conformité art. 3 Décret n°2002-120",
+      "Chauffage insuffisant — ne permet pas de chauffer normalement toutes les pièces habitables",
+      "Dispositif de chauffage défectueux ou hors service"
+    ]}
   ]},
   {id:'F',lb:"Alimentation en eau",ar:'Art. 3 — suite',gs:[
     {id:'F1',lb:"Réseaux d'eau",it:["Arrivée eau potable avec évacuation intérieure","Distribution, débit et pression suffisants","Évacuation eaux ménagères avec siphons","Évacuation eaux vannes avec siphons","Absence de refoulement des odeurs"]}
@@ -1661,14 +1687,34 @@ const SECS = [
   {id:'J',lb:'Normes dimensionnelles',ar:'Art. 4 — Décret n°2021-872',gs:[
     {id:'J1',lb:'Dimensions réglementaires',it:["Au moins une pièce principale supérieure à 9m² et hauteur supérieure à 2,20m","Une pièce principale d'au moins 20m³","Surface et volume habitables supérieurs à 14m² et 33m³ par habitant","Suroccupation constatée"]}
   ]},
-  {id:'K',lb:'Sécurité des occupants',ar:'Art. 5 — Décret n°2020-1711',gs:[
-    {id:'K1',lb:'Arrêtés & sécurité',it:["Arrêté de mise en sécurité et de péril (art. L.511-1 CCH)","Traitement de l'insalubrité (art. L.511-1 CCH)","Manquement règles d'hygiène — non-respect du RSD"]}
+  {id:'K',lb:'Sécurité des occupants — Procédures administratives',ar:'Art. 5 — Décret n°2020-1711 · Art. L.511-1 CCH · RSD 47',gs:[
+    {id:'K1',lb:'Arrêtés et procédures en cours (information documentaire)',it:[
+      "Arrêté de mise en sécurité ou de péril (art. L.511-1 CCH) : Aucun connu / En cours (référence à préciser en observation) / Levé / Inconnu",
+      "Procédure d'insalubrité ARS ou Préfet (art. L.1331-22 CSP) : Aucune connue / En cours / Clôturée / Inconnue",
+      "Nota : Denis Charbonnier constate et documente l'existence de ces procédures — il ne prend, ne lève et n'instruite aucun arrêté"
+    ]},
+    {id:'K2',lb:'Manquements au RSD constatés lors de la visite',it:[
+      "Manquement aux règles d'aération/ventilation (RSD 47 applicable)",
+      "Manquement aux règles d'éclairage naturel (RSD 47 applicable)",
+      "Manquement aux règles d'hygiène sanitaire (RSD 47 applicable)",
+      "Manquement aux règles relatives à l'humidité et étanchéité (RSD 47 applicable)",
+      "Autre manquement au RSD 47 — à préciser en observation"
+    ]}
   ]},
   {id:'L',lb:'Risques sanitaires',ar:'Art. 5 — suite',gs:[
-    {id:'L1',lb:'Plomb',it:["Biens avant 1949 : CREP présent","Si CREP positif : recommandations appliquées","Sinon : réalisation par personne certifiée"]},
+    {id:'L1',lb:'Plomb — CREP (Constat de Risque d\'Exposition au Plomb)',it:[
+      "Biens construits avant le 1er janvier 1949 : CREP (art. L.1334-5 CSP) présent au dossier — réalisé par diagnostiqueur certifié",
+      "Si CREP positif (seuil > 1 mg/cm²) : travaux de suppression ou confinement réalisés — justificatifs présents",
+      "Si CREP absent : signalement — réalisation obligatoire par un opérateur certifié (art. L.1334-5 CSP)"
+    ]},
     {id:'L2',lb:'Amiante',it:["Biens avant 1997 : rapport de repérage amiante présent"]},
     {id:'L3',lb:'Parasites',it:["Absence d'animaux nuisibles","Absence de parasites (puces, cafards, punaises)","Absence de dégradation insectes xylophages ou champignons"]},
-    {id:'L4',lb:'Incendie',it:["DAAF présent","Extincteur présent","Détecteur de monoxyde de carbone présent"]},
+    {id:'L4',lb:'Sécurité incendie et CO',it:[
+      "DAAF (Détecteur Avertisseur Autonome de Fumée) présent et fonctionnel — obligatoire dans tous les logements depuis le 01/01/2016 (Loi n°2010-238 du 9 mars 2010 — art. R.129-12 CCH)",
+      "DAAF : emplacement conforme — hors salle de bain, hors cuisine directement",
+      "Détecteur de monoxyde de carbone (CO) présent — recommandé si chauffage combustion (gaz, fioul, bois)",
+      "Extincteur en parties communes — obligatoire selon catégorie d'immeuble (ERP, IGH) — non obligatoire en logement privatif individuel"
+    ]},
     {id:'L5',lb:'ERNMT',it:["État des risques naturels et technologiques présent"]},
     {id:'L6',lb:'Déchets',it:["Absence de déchets et encombrants intérieurs ou extérieurs"]},
     {id:'L7',lb:'Bruits',it:["Absence de sources de nuisances sonores"]}
