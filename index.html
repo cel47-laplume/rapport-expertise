@@ -897,6 +897,8 @@ textarea { resize: vertical; min-height: 72px; }
   .app-content { padding: 0; max-width: 100%; }
   .sec-body { display: block !important; }
   .sec-toggle { background: #EBF3FF !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sec-toggle-ref { display: block !important; font-size: 8pt; color: #1F3864; font-weight: 600; }
+  .sec-toggle-lb { font-size: 11pt; }
   .flag-dpe.show { display: block !important; }
   .mission-info.on { display: block !important; }
   .rosee-box { display: flex !important; }
@@ -1016,16 +1018,28 @@ textarea { resize: vertical; min-height: 72px; }
             <button class="mission-btn" data-mission="mixte" type="button">📋 Mission mixte</button>
           </div>
           <div class="mission-info" id="mi-decence" style="border-color:#1F3864">
-            <strong style="color:var(--marine)">Référentiel — Décence</strong><br>
-            Art. 6 loi n°89-462 du 6 juillet 1989 · Décret n°2002-120 du 30 janvier 2002.
+            <strong style="color:var(--marine)">Fondement juridique — Mission Décence</strong><br>
+            <strong>Art. 6 loi n°89-462 du 6 juillet 1989</strong> modifiée (bailleur tenu de délivrer un logement décent) ·
+            <strong>Décret n°2002-120 du 30 janvier 2002</strong> relatif aux caractéristiques du logement décent ·
+            <strong>Décret n°2021-872 du 30 juin 2021</strong> (performance énergétique — art. 3 bis).<br>
+            <em>Le présent rapport constitue un diagnostic technique visuel et non destructif établi à la demande du commanditaire. Il n'a pas valeur de décision administrative ni judiciaire.</em>
           </div>
           <div class="mission-info" id="mi-insalubrite" style="border-color:#AE1E1E;background:#FAEAEA">
-            <strong style="color:#7B0000">Référentiel — Insalubrité remédiable</strong><br>
-            Art. L.1331-22 et L.1331-23 du Code de la santé publique.
+            <strong style="color:#7B0000">Fondement juridique — Mission Insalubrité remédiable</strong><br>
+            <strong>Art. L.1331-22 CSP</strong> (insalubrité à l'intérieur des locaux) ·
+            <strong>Art. L.1331-23 CSP</strong> (insalubrité irrémédiable) ·
+            <strong>Décret n°2002-120 du 30 janvier 2002</strong> (critères de décence, applicable par analogie) ·
+            <strong>Grille d'évaluation ANAH</strong> — Formule ID = 1−√(((1−DM)²+(1−DG)²)/2).<br>
+            <em>Périmètre : insalubrité remédiable uniquement. Le présent rapport constitue un diagnostic technique visuel et non destructif. Il n'a pas valeur de décision administrative ni judiciaire. La qualification définitive relève de l'autorité compétente (ARS, maire, préfet).</em>
           </div>
           <div class="mission-info" id="mi-mixte" style="border-color:#9A6200;background:#FDF3DC">
-            <strong style="color:#5a3800">Référentiel — Mission mixte</strong><br>
-            Art. 6 loi n°89-462 · Décret n°2002-120 · Art. L.1331-22 et L.1331-23 CSP.
+            <strong style="color:#5a3800">Fondement juridique — Mission mixte Décence / Insalubrité</strong><br>
+            <strong>Art. 6 loi n°89-462 du 6 juillet 1989</strong> (décence) ·
+            <strong>Décret n°2002-120 du 30 janvier 2002</strong> (caractéristiques du logement décent) ·
+            <strong>Art. L.1331-22 et L.1331-23 CSP</strong> (insalubrité remédiable) ·
+            <strong>Décret n°2021-872 du 30 juin 2021</strong> (performance énergétique) ·
+            <strong>Grille d'évaluation ANAH</strong> — Formule ID = 1−√(((1−DM)²+(1−DG)²)/2).<br>
+            <em>Périmètre : insalubrité remédiable uniquement. Le présent rapport constitue un diagnostic technique visuel et non destructif. Il n'a pas valeur de décision administrative ni judiciaire.</em>
           </div>
         </div>
 
@@ -1040,6 +1054,10 @@ textarea { resize: vertical; min-height: 72px; }
             <div class="fd"><label class="lb req">Expert mandaté</label><input type="text" id="m_exp" value="Denis Charbonnier"></div>
             <div class="fd"><label class="lb">Organisme</label><input type="text" id="m_org" value="CEL-47"></div>
             <div class="fd"><label class="lb">SIRET expert</label><input type="text" id="m_siret" placeholder="XXX XXX XXX XXXXX"></div>
+          </div>
+          <div class="fd" style="margin-top:10px">
+            <label class="lb">Habilitation / Titre de l'expert</label>
+            <input type="text" id="m_hab" value="Certificat de compétences — Expertise insalubrité / décence du logement, spécialisation logement insalubre remédiable (EFEL – Drouet Expertises, mai 2026)">
           </div>
           <div class="g2" style="margin-top:10px">
             <div class="fd"><label class="lb">Heure de fin</label><input type="text" id="m_hfin" placeholder="11h30"></div>
@@ -1395,7 +1413,13 @@ textarea { resize: vertical; min-height: 72px; }
               <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#FAEAEA;color:#AE1E1E">0,40–0,60 · Avérée</span>
               <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#7B0000;color:#fff">0,60–1 · Grave</span>
             </div>
-            <div style="font-size:9px;color:var(--mu);margin-top:6px;font-style:italic">Réf. Guide Grille ANAH · Art. L.1331-22 CSP</div>
+            <div style="font-size:10px;color:var(--mu);margin-top:8px;font-style:italic;text-align:left;padding:8px 12px;background:var(--fond);border-radius:6px;border-left:3px solid var(--marine)">
+          <strong style="color:var(--marine)">Références réglementaires :</strong><br>
+          Décret n°2002-120 du 30 janvier 2002 relatif aux caractéristiques du logement décent ·
+          Art. L.1331-22 et L.1331-23 du Code de la santé publique (insalubrité) ·
+          Grille d'évaluation ANAH — ID = 1−√(((1−DM)²+(1−DG)²)/2) ·
+          Loi n°89-462 du 6 juillet 1989 art. 6 · Décret n°2021-872 du 30 juin 2021 (DPE)
+        </div>
           </div>
           <div style="overflow-x:auto">
             <table class="tbl">
@@ -2285,6 +2309,7 @@ function collectData() {
       type:APP.mission, num:gv('m_num'), date:gv('m_date'),
       harr:gv('m_harr'), hfin:gv('m_hfin'), exp:gv('m_exp'),
       org:gv('m_org'), siret:gv('m_siret'), acc:gv('m_acc'),
+      hab:gv('m_hab'),
       lm:gv('m_lm'), lmref:gv('m_lmref'), obs:gv('m_obs')
     },
     demandeur: {
@@ -2430,6 +2455,7 @@ function applyData(data) {
     sv('m_num',m.num); sv('m_date',m.date); sv('m_harr',m.harr);
     sv('m_hfin',m.hfin); sv('m_exp',m.exp); sv('m_org',m.org);
     sv('m_siret',m.siret); sv('m_acc',m.acc);
+    sv('m_hab',m.hab);
     sv('m_lm',m.lm); sv('m_lmref',m.lmref); sv('m_obs',m.obs);
   }
   if (data.demandeur) {
@@ -2603,8 +2629,18 @@ function doPrint() {
   buildConclusions();
   const footer = document.getElementById('prt-footer');
   if (footer) {
-    footer.innerHTML = `CEL-47 · Denis Charbonnier · SIRET : ${gv('m_siret')} · 166 chemin de Lamaurague · 47310 Laplume · Rapport du ${gv('m_date')}${gv('b_rue')?' · '+gv('b_rue')+' '+gv('b_cp')+' '+gv('b_vil'):''}
-    <br><em>Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso.</em>`;
+    const hab = gv('m_hab') || 'Certificat de compétences — Expertise insalubrité / décence du logement (EFEL – Drouet Expertises, mai 2026)';
+    const mtype = APP.mission === 'decence' ? 'Décence — Décret n°2002-120 du 30/01/2002 · Art. 6 loi n°89-462 du 06/07/1989'
+                : APP.mission === 'insalubrite' ? 'Insalubrité remédiable — Art. L.1331-22 et L.1331-23 CSP · Grille ANAH'
+                : APP.mission === 'mixte' ? 'Décence / Insalubrité — Décret n°2002-120 · Art. L.1331-22 et L.1331-23 CSP · Art. 6 loi n°89-462'
+                : '';
+    footer.innerHTML =
+      `<strong>CEL-47 · Denis Charbonnier · SIRET : ${gv('m_siret')} · 166 chemin de Lamaurague · 47310 Laplume</strong><br>` +
+      `Habilitation : ${hab}<br>` +
+      (mtype ? `Fondement juridique : ${mtype}<br>` : '') +
+      `Rapport du ${gv('m_date')}${gv('b_rue') ? ' · ' + gv('b_rue') + ' ' + gv('b_cp') + ' ' + gv('b_vil') : ''}<br>` +
+      `<em>Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso. ` +
+      `Diagnostic technique visuel et non destructif — ne constitue pas une décision administrative ou judiciaire.</em>`;
   }
   window.print();
 }
