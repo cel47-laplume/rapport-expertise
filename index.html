@@ -885,8 +885,64 @@ textarea { resize: vertical; min-height: 72px; }
 
 /* ── IMPRESSION ── */
 @media print {
-  @page { size: A4; margin: 12mm 10mm 14mm 10mm; }
+  @page {
+    size: A4;
+    margin: 12mm 10mm 22mm 10mm;
+    @bottom-center {
+      content: "Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso. CEL-47 · Denis Charbonnier · 166 chemin de Lamaurague · 47310 Laplume";
+      font-size: 7pt;
+      color: #5A5856;
+      font-style: italic;
+    }
+  }
   .prt-logo { display: block !important; }
+  /* Filigrane CEL-47 sur chaque page */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    width: 400px;
+    height: 200px;
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27400%27%20height%3D%27200%27%20viewBox%3D%270%200%20400%20200%27%3E%0A%20%20%3Ctext%20x%3D%27200%27%20y%3D%27130%27%20font-family%3D%27Arial%20Black%2Csans-serif%27%20font-size%3D%2790%27%20font-weight%3D%27900%27%20%0A%20%20%20%20text-anchor%3D%27middle%27%20fill%3D%27%25231F3864%27%20opacity%3D%270.08%27%20letter-spacing%3D%27-2%27%3ECEL47%3C/text%3E%0A%20%20%3Ctext%20x%3D%27200%27%20y%3D%27165%27%20font-family%3D%27Arial%2Csans-serif%27%20font-size%3D%2713%27%20font-weight%3D%27600%27%0A%20%20%20%20text-anchor%3D%27middle%27%20fill%3D%27%25231F3864%27%20opacity%3D%270.06%27%3EExpertiser%20%C2%B7%20R%C3%A9gulariser%20%C2%B7%20Conformer%20%C2%B7%20Prot%C3%A9ger%3C/text%3E%0A%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: 1;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  /* En-tête fixe sur chaque page impression */
+  .prt-page-header {
+    display: flex !important;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 4pt 10mm;
+    border-bottom: 1pt solid #1F3864;
+    background: white;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* Décaler le contenu pour ne pas être sous l'en-tête */
+  .app-content { margin-top: 45pt; }
+  /* Mention indissociable en bas de chaque page via pied de page fixe */
+  .prt-fixed-footer {
+    display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 7pt;
+    color: #5A5856;
+    font-style: italic;
+    padding: 4pt 10mm;
+    border-top: 0.5pt solid #ccc;
+    background: white;
+  }
   #screen-home, .app-header, .nav-bar, .bot-bar,
   .ne-btn, .ad-btn, .btn-row, .mission-btns,
   .photo-add, .photo-del, .sec-toggle-arrow,
@@ -989,9 +1045,21 @@ textarea { resize: vertical; min-height: 72px; }
   <div class="app-content">
 
     <!-- LOGO IMPRESSION (caché sur écran) -->
-    <div class="prt-logo" style="display:none;text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #1F3864">
-      <img src="data:image/jpeg;base64,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" alt="CEL-47" style="height:50px;width:auto">
-      <div style="font-size:9pt;color:#1F3864;font-weight:700;margin-top:4px">Rapport d'Expertise — Décence · Insalubrité remédiable</div>
+    <div class="prt-logo" style="display:none;text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:2pt solid #1F3864">
+      <img src="data:image/jpeg;base64,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" alt="CEL-47" style="height:45px;width:auto">
+      <div style="font-size:9pt;color:#1F3864;font-weight:700;margin-top:3px">Rapport d'Expertise · Décence · Insalubrité remédiable</div>
+      <div style="font-size:8pt;color:#5A5856;margin-top:1px">Cabinet CEL-47 · Denis Charbonnier · Laplume (47310) · Lot-et-Garonne</div>
+    </div>
+    <!-- EN-TÊTE FIXE CHAQUE PAGE IMPRESSION -->
+    <div class="prt-page-header" style="display:none;position:fixed;top:0;left:0;right:0;
+      padding:4pt 10mm;border-bottom:1pt solid #1F3864;background:white;
+      display:flex;align-items:center;justify-content:space-between">
+      <img src="data:image/jpeg;base64,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" alt="CEL-47" style="height:28pt;width:auto">
+      <div style="font-size:7pt;color:#1F3864;font-weight:700;text-align:right">
+        Rapport d'Expertise · Décence · Insalubrité remédiable<br>
+        <span style="font-weight:400;color:#5A5856">CEL-47 · Denis Charbonnier · Laplume (47310)</span>
+      </div>
+    </div>
     </div>
 
     <!-- VERROU -->
@@ -1540,6 +1608,13 @@ textarea { resize: vertical; min-height: 72px; }
           CEL-47 · Denis Charbonnier · 166 chemin de Lamaurague · 47310 Laplume
         </div>
         <div class="prt-footer" style="display:none" id="prt-footer"></div>
+
+    <!-- PIED DE PAGE FIXE CHAQUE PAGE (impression uniquement) -->
+    <div class="prt-fixed-footer" style="display:none">
+      Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état,
+      vis-à-vis des tiers, que par publication ou communication in extenso.
+      CEL-47 · Denis Charbonnier · 166 chemin de Lamaurague · 47310 Laplume
+    </div>
 
       </div>
     </div>
