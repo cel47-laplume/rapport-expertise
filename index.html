@@ -887,12 +887,18 @@ textarea { resize: vertical; min-height: 72px; }
 @media print {
   @page {
     size: A4;
-    margin: 12mm 10mm 22mm 10mm;
+    margin: 15mm 15mm 22mm 15mm;
     @bottom-center {
-      content: "Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso. CEL-47 · Expert : Denis Charbonnier";
+      content: "Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso. · CEL-47 · Expert : Denis Charbonnier";
       font-size: 7pt;
       color: #5A5856;
       font-style: italic;
+    }
+    @bottom-right {
+      content: counter(page) " / " counter(pages);
+      font-size: 8pt;
+      color: #1F3864;
+      font-weight: 700;
     }
   }
   .prt-logo { display: block !important; }
@@ -917,9 +923,20 @@ textarea { resize: vertical; min-height: 72px; }
   .photo-add, .photo-del, .sec-toggle-arrow,
   .btn-occ-del, .btn-add-piece, button:not(.print-keep) { display: none !important; }
   body { background: var(--blanc); font-size: 9pt; }
-  .bloc { border: 1pt solid #ccc; margin-bottom: 7pt; box-shadow: none; page-break-inside: avoid; }
-  .bloc-hd { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bloc { border: 1pt solid #ccc; margin-bottom: 5pt; box-shadow: none; page-break-inside: auto; }
+  .bloc-hd { -webkit-print-color-adjust: exact; print-color-adjust: exact; page-break-after: avoid; }
+  .sec-bloc { page-break-inside: auto; }
+  .sec-toggle { page-break-after: avoid; }
+  .grp-title { page-break-after: avoid; font-size: 8.5pt; font-weight: 800; }
+  .sub-title { page-break-after: avoid; font-size: 9pt; font-weight: 800; color: #256B10; border-bottom: 1.5pt solid #7FBA00; padding-bottom: 3pt; margin-bottom: 6pt; }
+  .cst-item { margin-bottom: 4pt; padding: 6pt 8pt; }
+  .sec-toggle-lb { font-size: 11pt; font-weight: 800; }
+  .bloc-title { font-size: 12pt; font-weight: 800; }
   .app-content { padding: 0; max-width: 100%; }
+  .bloc-body { padding: 8pt 10pt; }
+  .sub { padding-bottom: 8pt; margin-bottom: 8pt; }
+  input, select { padding: 3pt 5pt; font-size: 8.5pt; min-height: auto; }
+  textarea { font-size: 8.5pt; }
   .sec-body { display: block !important; }
   .sec-toggle { background: #EBF3FF !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .sec-toggle-ref { display: block !important; font-size: 8pt; color: #1F3864; font-weight: 600; }
@@ -1018,10 +1035,17 @@ textarea { resize: vertical; min-height: 72px; }
   <div class="app-content">
 
     <!-- LOGO IMPRESSION (caché sur écran) -->
-    <div class="prt-logo" style="display:none;text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:2pt solid #1F3864">
+    <div class="prt-logo" style="display:none;margin-bottom:14px;padding-bottom:10px;border-bottom:2pt solid #1F3864;display:flex;align-items:center;justify-content:space-between">
       <img src="data:image/jpeg;base64,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" alt="CEL-47" style="height:45px;width:auto">
-      <div style="font-size:9pt;color:#1F3864;font-weight:700;margin-top:3px">Rapport d'Expertise · Décence · Insalubrité remédiable</div>
-      <div style="font-size:8pt;color:#5A5856;margin-top:1px">Cabinet CEL-47 · Denis Charbonnier · Laplume (47310) · Lot-et-Garonne</div>
+      <div>
+        <div style="font-size:9pt;color:#1F3864;font-weight:700">Rapport d'Expertise · Décence · Insalubrité remédiable</div>
+        <div style="font-size:8pt;color:#5A5856;margin-top:1pt">Cabinet CEL-47 · Denis Charbonnier · Laplume (47310) · Lot-et-Garonne</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:9pt;font-weight:700;color:#1F3864">charbonnier@cel-47.fr</div>
+        <div style="font-size:9pt;color:#1F3864">www.cel-47.fr</div>
+        <div style="font-size:7.5pt;color:#5A5856;margin-top:1pt;font-style:italic">Certificat de compétences EFEL – Drouet Expertises, mai 2026</div>
+      </div>
     </div>
     
     </div>
@@ -1128,35 +1152,170 @@ textarea { resize: vertical; min-height: 72px; }
         <div class="bloc-status" id="bs-demandeur">⚪ Vide</div>
       </div>
       <div class="bloc-body">
+
         <div class="sub">
-          <div class="sub-title">Qualité et identité</div>
-          <div class="g2">
-            <div class="fd"><label class="lb">Qualité du demandeur</label>
-              <select id="d_qual">
+          <div class="sub-title">Type de demandeur</div>
+          <div style="display:flex;gap:10px;margin-bottom:12px">
+            <button class="sel-btn on" id="dem-part" data-dem="particulier" type="button" style="flex:1;min-height:56px">
+              <span class="nm">👤 Particulier</span>
+              <span class="ds">Personne physique</span>
+            </button>
+            <button class="sel-btn" id="dem-moral" data-dem="morale" type="button" style="flex:1;min-height:56px">
+              <span class="nm">🏢 Personne morale</span>
+              <span class="ds">Société · Association · Collectivité</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PARTICULIER -->
+        <div class="sub" id="dem-particulier-bloc">
+          <div class="sub-title">Identité du particulier</div>
+          <div class="g3">
+            <div class="fd"><label class="lb req">Nom de famille</label><input type="text" id="d_nom"></div>
+            <div class="fd"><label class="lb req">Prénom</label><input type="text" id="d_prn"></div>
+            <div class="fd"><label class="lb">Qualité</label>
+              <select id="d_qual_part">
                 <option value="">— Sélectionner —</option>
                 <option>Propriétaire / Bailleur</option>
                 <option>Locataire</option>
-                <option>Collectivité territoriale</option>
-                <option>Association</option>
+                <option>Propriétaire occupant</option>
+                <option>Hébergé à titre gratuit</option>
+                <option>Mandataire (gestionnaire)</option>
                 <option>Autre</option>
               </select></div>
-            <div class="fd"><label class="lb">SIRET (si personne morale)</label><input type="text" id="d_siret"></div>
           </div>
           <div class="g3" style="margin-top:10px">
-            <div class="fd"><label class="lb req">Nom</label><input type="text" id="d_nom"></div>
-            <div class="fd"><label class="lb req">Prénom</label><input type="text" id="d_prn"></div>
             <div class="fd"><label class="lb">Date de naissance</label><input type="date" id="d_ddn"></div>
+            <div class="fd"><label class="lb">Lieu de naissance</label><input type="text" id="d_lieu_naissance" placeholder="Ville, département"></div>
+            <div class="fd"><label class="lb">Pièce d'identité</label>
+              <select id="d_piece_id">
+                <option value="">— Type —</option>
+                <option>Carte nationale d'identité</option>
+                <option>Passeport</option>
+                <option>Permis de conduire</option>
+                <option>Titre de séjour</option>
+              </select></div>
           </div>
-          <div class="g3" style="margin-top:10px">
+          <div class="g2" style="margin-top:10px">
+            <div class="fd"><label class="lb">N° pièce d'identité</label><input type="text" id="d_num_piece" placeholder="N° CNI / Passeport / Permis"></div>
+            <div class="fd"><label class="lb">Date de validité</label><input type="date" id="d_valid_piece"></div>
+          </div>
+          <div class="g2" style="margin-top:10px">
             <div class="fd"><label class="lb">Téléphone</label><input type="tel" id="d_tel"></div>
             <div class="fd"><label class="lb">E-mail</label><input type="email" id="d_mail"></div>
-            <div class="fd"><label class="lb">Adresse postale</label><input type="text" id="d_adr"></div>
+          </div>
+          <div style="margin-top:10px">
+            <div class="sub-title" style="margin-bottom:8px">Adresse postale</div>
+            <div class="g2">
+              <div class="fd"><label class="lb">N° et voie</label><input type="text" id="d_adr_voie" placeholder="12 rue des Fleurs"></div>
+              <div class="fd"><label class="lb">Complément</label><input type="text" id="d_adr_comp" placeholder="Bât. A, Appt 3…"></div>
+            </div>
+            <div class="g3" style="margin-top:8px">
+              <div class="fd"><label class="lb">Code postal</label><input type="text" id="d_adr_cp"></div>
+              <div class="fd"><label class="lb">Ville</label><input type="text" id="d_adr_vil"></div>
+              <div class="fd"><label class="lb">Pays</label><input type="text" id="d_adr_pays" value="France"></div>
+            </div>
           </div>
         </div>
+
+        <!-- PERSONNE MORALE -->
+        <div class="sub" id="dem-morale-bloc" style="display:none">
+          <div class="sub-title">Identification de la personne morale</div>
+          <div class="g2">
+            <div class="fd"><label class="lb req">Dénomination sociale</label><input type="text" id="d_denomination" placeholder="SCI Dupont, Association…"></div>
+            <div class="fd"><label class="lb">Forme juridique</label>
+              <select id="d_forme_jur">
+                <option value="">— Sélectionner —</option>
+                <option>SCI (Société Civile Immobilière)</option>
+                <option>SARL</option>
+                <option>SAS</option>
+                <option>SA</option>
+                <option>Association loi 1901</option>
+                <option>Collectivité territoriale</option>
+                <option>Établissement public</option>
+                <option>Bailleur social / OPH</option>
+                <option>Autre</option>
+              </select></div>
+          </div>
+          <div class="g2" style="margin-top:10px">
+            <div class="fd"><label class="lb">SIRET</label><input type="text" id="d_siret" placeholder="XXX XXX XXX XXXXX"></div>
+            <div class="fd"><label class="lb">Qualité dans la demande</label>
+              <select id="d_qual_moral">
+                <option value="">— Sélectionner —</option>
+                <option>Propriétaire / Bailleur</option>
+                <option>Gestionnaire mandataire</option>
+                <option>Collectivité mandante</option>
+                <option>Association d'aide aux locataires</option>
+                <option>Autre</option>
+              </select></div>
+          </div>
+          <div style="margin-top:10px">
+            <div class="sub-title" style="margin-bottom:8px">Siège social</div>
+            <div class="g2">
+              <div class="fd"><label class="lb">N° et voie</label><input type="text" id="d_siege_voie"></div>
+              <div class="fd"><label class="lb">Complément</label><input type="text" id="d_siege_comp"></div>
+            </div>
+            <div class="g3" style="margin-top:8px">
+              <div class="fd"><label class="lb">Code postal</label><input type="text" id="d_siege_cp"></div>
+              <div class="fd"><label class="lb">Ville</label><input type="text" id="d_siege_vil"></div>
+              <div class="fd"><label class="lb">Pays</label><input type="text" id="d_siege_pays" value="France"></div>
+            </div>
+          </div>
+          <div style="margin-top:10px">
+            <div class="sub-title" style="margin-bottom:8px">Représentant légal</div>
+            <div class="g3">
+              <div class="fd"><label class="lb req">Nom</label><input type="text" id="d_rep_nom"></div>
+              <div class="fd"><label class="lb req">Prénom</label><input type="text" id="d_rep_prn"></div>
+              <div class="fd"><label class="lb">Fonction</label><input type="text" id="d_rep_fonc" placeholder="Gérant, Président…"></div>
+            </div>
+            <div class="g2" style="margin-top:8px">
+              <div class="fd"><label class="lb">Téléphone</label><input type="tel" id="d_tel"></div>
+              <div class="fd"><label class="lb">E-mail</label><input type="email" id="d_mail"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOTIF -->
         <div class="sub">
           <div class="sub-title">Motif de la demande</div>
-          <textarea id="d_motif" rows="3" placeholder="Litige locatif, insalubrité suspectée, dossier ANAH, instruction APML…"></textarea>
+          <div class="g2">
+            <div class="fd"><label class="lb">Motif principal</label>
+              <select id="d_motif_sel">
+                <option value="">— Sélectionner —</option>
+                <optgroup label="Habitabilité et salubrité">
+                  <option>Insalubrité suspectée — humidité, moisissures</option>
+                  <option>Insalubrité suspectée — désordres structurels</option>
+                  <option>Insalubrité suspectée — installation électrique défaillante</option>
+                  <option>Insalubrité suspectée — chauffage défaillant ou absent</option>
+                  <option>Non-décence du logement</option>
+                  <option>Suroccupation</option>
+                  <option>Risque plomb (CREP) ou amiante</option>
+                </optgroup>
+                <optgroup label="Procédures administratives">
+                  <option>Appui à instruction de dossier ANAH</option>
+                  <option>Appui à arrêté de mise en sécurité</option>
+                  <option>Appui à procédure insalubrité ARS / Préfecture</option>
+                  <option>Constat avant / après travaux</option>
+                  <option>Levée de procédure administrative</option>
+                  <option>Permis de louer / APML</option>
+                </optgroup>
+                <optgroup label="Litige locatif">
+                  <option>Litige locatif — retenue sur dépôt de garantie</option>
+                  <option>Litige locatif — impayés de loyer</option>
+                  <option>Litige locatif — état des lieux contesté</option>
+                  <option>Litige locatif — travaux non réalisés</option>
+                </optgroup>
+                <optgroup label="Autre">
+                  <option>Expertise avant acquisition</option>
+                  <option>Expertise amiable contradictoire</option>
+                  <option>Autre — préciser ci-dessous</option>
+                </optgroup>
+              </select></div>
+            <div class="fd"><label class="lb">Précisions / Autre motif</label>
+              <textarea id="d_motif" rows="3" placeholder="Précisez si 'Autre', ou complétez le motif sélectionné…"></textarea></div>
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -1262,31 +1421,56 @@ textarea { resize: vertical; min-height: 72px; }
 
         <div class="sub">
           <div class="sub-title">Énergie &amp; Réseaux</div>
-          <div class="g4">
-            <div class="fd"><label class="lb">Gaz</label>
+          <div class="g2">
+            <div class="fd"><label class="lb">Alimentation gaz</label>
               <select id="b_gaz"><option>Oui</option><option>Non</option></select></div>
-            <div class="fd"><label class="lb">Électricité</label>
+            <div class="fd"><label class="lb">Alimentation électrique</label>
               <select id="b_ele"><option>Oui</option><option>Non</option></select></div>
-            <div class="fd"><label class="lb">Linky</label>
-              <select id="b_lnk"><option>Oui</option><option>Non</option></select></div>
-            <div class="fd"><label class="lb">Solaire</label>
-              <select id="b_sol"><option>Non</option><option>Oui</option></select></div>
           </div>
           <div class="g2" style="margin-top:10px">
-            <div class="fd"><label class="lb">Type de chauffage</label>
-              <input type="text" id="b_chauf" placeholder="Collectif, électrique, gaz…"></div>
-            <div class="fd"><label class="lb">Valeur DPE (kWh/m²/an)</label>
-              <input type="number" id="b_dpe_val" placeholder="Ex : 380" min="0" id="b_dpe_val"></div>
-          </div>
-          <div class="g2" style="margin-top:10px">
-            <div class="fd"><label class="lb">Classe DPE</label>
-              <select id="b_dpe_cl">
-                <option value="">—</option>
-                <option>A</option><option>B</option><option>C</option>
-                <option>D</option><option>E</option><option>F</option><option>G</option>
+            <div class="fd"><label class="lb">Type de chauffage principal</label>
+              <select id="b_chauf">
+                <option value="">— Sélectionner —</option>
+                <option>Chauffage central collectif (eau chaude)</option>
+                <option>Chaudière gaz individuelle</option>
+                <option>Chaudière fioul individuelle</option>
+                <option>Chauffage électrique (convecteurs / panneaux)</option>
+                <option>Pompe à chaleur air/air</option>
+                <option>Pompe à chaleur air/eau</option>
+                <option>Climatisation réversible</option>
+                <option>Poêle à bois / granulés</option>
+                <option>Insert / cheminée</option>
+                <option>Absence de chauffage</option>
+                <option>Autre</option>
               </select></div>
-            <div class="fd"><label class="lb">Observations énergie</label>
-              <input type="text" id="b_enob"></div>
+            <div class="fd"><label class="lb">Type de production ECS</label>
+              <select id="b_ecs_type">
+                <option value="">— Sélectionner —</option>
+                <option>Chauffe-eau électrique (ballon)</option>
+                <option>Chauffe-eau gaz</option>
+                <option>Chauffe-bain instantané gaz</option>
+                <option>Production via chaudière centrale</option>
+                <option>Thermodynamique (PAC)</option>
+                <option>Solaire thermique</option>
+                <option>Absence</option>
+              </select></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="sub-title" style="margin-bottom:8px">DPE — Diagnostic de Performance Énergétique</div>
+            <div class="g3">
+              <div class="fd"><label class="lb">Valeur DPE (kWh/m²/an)</label>
+                <input type="number" id="b_dpe_val" placeholder="Ex : 380" min="0"></div>
+              <div class="fd"><label class="lb">Classe DPE</label>
+                <select id="b_dpe_cl">
+                  <option value="">—</option>
+                  <option>A</option><option>B</option><option>C</option>
+                  <option>D</option><option>E</option><option>F</option><option>G</option>
+                </select></div>
+              <div class="fd"><label class="lb">Date du DPE</label>
+                <input type="date" id="b_dpe_date"></div>
+            </div>
+            <div class="fd" style="margin-top:8px"><label class="lb">Référence du DPE (N° rapport diagnostiqueur)</label>
+              <input type="text" id="b_dpe_ref" placeholder="N° rapport DPE"></div>
           </div>
           <div class="flag-dpe" id="flag-dpe">
             <strong>⚠️ NON-DÉCENCE ÉNERGÉTIQUE — Art. 3 bis — Décret n°2021-872 du 30 juin 2021</strong><br>
@@ -1325,9 +1509,9 @@ textarea { resize: vertical; min-height: 72px; }
           </div>
           <div class="g2" style="margin-top:10px">
             <div class="fd"><label class="lb">Appareil utilisé</label>
-              <input type="text" id="m_app" placeholder="TESTO 625, FLUKE…"></div>
+              <input type="text" id="m_app" value="TESTO 625" placeholder="TESTO 625, FLUKE…"></div>
             <div class="fd"><label class="lb">Localisation des mesures</label>
-              <input type="text" id="m_loc" placeholder="Chambre nord, angle mur/sol…"></div>
+              <input type="text" id="m_loc" value="Chambre la moins bien exposée — angle mur extérieur / sol" placeholder="Chambre nord, angle mur/sol…"></div>
           </div>
           <div class="fd" style="margin-top:10px"><label class="lb">Observations hygrothermiques</label>
             <textarea id="m_obs_hygro" rows="2" placeholder="Condensation, moisissures, odeurs…"></textarea></div>
@@ -1346,16 +1530,53 @@ textarea { resize: vertical; min-height: 72px; }
       <div class="bloc-hd">
         <div class="bloc-num">4</div>
         <div>
-          <div class="bloc-title">Occupants</div>
-          <div class="bloc-sub">Occupant principal + autres occupants</div>
+          <div class="bloc-title">Occupants du logement</div>
+          <div class="bloc-sub">Occupant(s) principal(aux) · Enfants · Difficultés · Projet</div>
         </div>
         <div class="bloc-status" id="bs-occupants">⚪ Vide</div>
       </div>
       <div class="bloc-body">
+        <div class="alert-info" style="margin-bottom:12px">
+          Les informations recueillies sont retranscrites factuellement telles que déclarées par les occupants — sans interprétation ni qualification de la part de l'expert.
+        </div>
         <div id="occupants-list"></div>
         <button class="btn-home-secondary" id="btn-add-occ" type="button" style="margin-top:8px;font-size:14px;padding:12px 16px">
           + Ajouter un occupant
         </button>
+
+        <div class="sub" style="margin-top:16px">
+          <div class="sub-title">Enfants à charge dans le logement</div>
+          <div class="g3">
+            <div class="fd"><label class="lb">Nombre d'enfants</label>
+              <input type="number" id="enf_nb" min="0" max="15" placeholder="0" value="0"></div>
+            <div class="fd"><label class="lb">Âges des enfants</label>
+              <input type="text" id="enf_ages" placeholder="Ex : 3 ans, 7 ans, 12 ans"></div>
+            <div class="fd"><label class="lb">Enfants mineurs présents lors de la visite</label>
+              <select id="enf_presents"><option>Non</option><option>Oui</option></select></div>
+          </div>
+        </div>
+
+        <div class="sub">
+          <div class="sub-title">Difficultés déclarées par les occupants</div>
+          <p style="font-size:11px;color:var(--mu);margin-bottom:8px;font-style:italic">
+            Retranscription factuelle des déclarations des occupants — sans interprétation médicale.
+          </p>
+          <div class="g2">
+            <div class="fd"><label class="lb">Troubles du sommeil déclarés</label>
+              <textarea id="occ_sommeil" rows="2" placeholder="Ex : 'Nous ne dormons plus dans la chambre depuis 3 mois en raison de l'humidité'…"></textarea></div>
+            <div class="fd"><label class="lb">Infections respiratoires ou problèmes de santé déclarés</label>
+              <textarea id="occ_sante" rows="2" placeholder="Ex : 'Les enfants toussent régulièrement depuis l'apparition des moisissures'…"></textarea></div>
+          </div>
+          <div class="fd" style="margin-top:8px"><label class="lb">Autres difficultés déclarées liées au logement</label>
+            <textarea id="occ_difficultes" rows="2" placeholder="Ex : 'Impossibilité de faire sécher le linge, condensation permanente sur les vitres'…"></textarea></div>
+        </div>
+
+        <div class="sub">
+          <div class="sub-title">Projet résidentiel — Attentes des occupants</div>
+          <div class="fd"><label class="lb">Que souhaitent obtenir les occupants face à cette situation ?</label>
+            <textarea id="occ_projet" rows="3" placeholder="Ex : 'Obtenir la réalisation des travaux de traitement de l'humidité', 'Être relogés temporairement', 'Obtenir une réduction de loyer'…"></textarea></div>
+        </div>
+
       </div>
     </div>
 
@@ -1595,12 +1816,8 @@ textarea { resize: vertical; min-height: 72px; }
         </div>
         <div class="prt-footer" style="display:none" id="prt-footer"></div>
 
-    <!-- PIED DE PAGE FIXE CHAQUE PAGE (impression uniquement) -->
-    <div class="prt-fixed-footer" style="display:none">
-      Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état,
-      vis-à-vis des tiers, que par publication ou communication in extenso.
-      CEL-47 · Expert : Denis Charbonnier
-    </div>
+    <!-- PIED DE PAGE GÉRÉ VIA @page CSS - div vide -->
+    <div class="prt-fixed-footer" style="display:none"></div>
 
       </div>
     </div>
@@ -2460,10 +2677,23 @@ function collectData() {
       hab:gv('m_hab'),
       lm:gv('m_lm'), lmref:gv('m_lmref'), obs:gv('m_obs')
     },
+    demType: APP.demType || 'particulier',
     demandeur: {
-      qual:gv('d_qual'), nom:gv('d_nom'), prn:gv('d_prn'), ddn:gv('d_ddn'),
-      tel:gv('d_tel'), mail:gv('d_mail'), siret:gv('d_siret'),
-      adr:gv('d_adr'), motif:gv('d_motif')
+      // Particulier
+      qual:gv('d_qual_part'), nom:gv('d_nom'), prn:gv('d_prn'), ddn:gv('d_ddn'),
+      lieu_naissance:gv('d_lieu_naissance'),
+      piece_id:gv('d_piece_id'), num_piece:gv('d_num_piece'), valid_piece:gv('d_valid_piece'),
+      tel:gv('d_tel'), mail:gv('d_mail'),
+      adr_voie:gv('d_adr_voie'), adr_comp:gv('d_adr_comp'),
+      adr_cp:gv('d_adr_cp'), adr_vil:gv('d_adr_vil'), adr_pays:gv('d_adr_pays'),
+      // Personne morale
+      denomination:gv('d_denomination'), forme_jur:gv('d_forme_jur'),
+      siret:gv('d_siret'), qual_moral:gv('d_qual_moral'),
+      siege_voie:gv('d_siege_voie'), siege_comp:gv('d_siege_comp'),
+      siege_cp:gv('d_siege_cp'), siege_vil:gv('d_siege_vil'), siege_pays:gv('d_siege_pays'),
+      rep_nom:gv('d_rep_nom'), rep_prn:gv('d_rep_prn'), rep_fonc:gv('d_rep_fonc'),
+      // Commun
+      motif_sel:gv('d_motif_sel'), motif:gv('d_motif')
     },
     bien: {
       rue:gv('b_rue'), lieu:gv('b_lieu'), cp:gv('b_cp'), vil:gv('b_vil'),
@@ -2472,8 +2702,8 @@ function collectData() {
       pieces:APP.pieces,
       eq:{ cui:gv('b_cui'),ev:gv('b_ev'),ac:gv('b_ac'),bd:gv('b_bd'),
            wc:gv('b_wc'),ecs:gv('b_ecs'),vmc_c:gv('b_vmc_c'),vmc_s:gv('b_vmc_s'),pmr:gv('b_pmr') },
-      res:{ gaz:gv('b_gaz'),ele:gv('b_ele'),lnk:gv('b_lnk'),sol:gv('b_sol'),chauf:gv('b_chauf') },
-      dpe:{ val:gv('b_dpe_val'),cl:gv('b_dpe_cl'),enob:gv('b_enob') },
+      res:{ gaz:gv('b_gaz'),ele:gv('b_ele'),chauf:gv('b_chauf'),ecs_type:gv('b_ecs_type') },
+      dpe:{ val:gv('b_dpe_val'),cl:gv('b_dpe_cl'),date:gv('b_dpe_date'),ref:gv('b_dpe_ref') },
       obs:gv('b_obs')
     },
     mesures: {
@@ -2482,6 +2712,15 @@ function collectData() {
     },
     occupants,
     photos,
+    enfants: {
+      nb: gv('enf_nb'), ages: gv('enf_ages'), presents: gv('enf_presents')
+    },
+    difficultes: {
+      sommeil: gv('occ_sommeil'),
+      sante: gv('occ_sante'),
+      autres: gv('occ_difficultes'),
+      projet: gv('occ_projet')
+    },
     scores: JSON.parse(JSON.stringify(APP.scores)),
     obsGroupes: JSON.parse(JSON.stringify(APP.obsGroupes)),
     precs: JSON.parse(JSON.stringify(APP.precs)),
@@ -2609,11 +2848,20 @@ function applyData(data) {
     sv('m_hab',m.hab);
     sv('m_lm',m.lm); sv('m_lmref',m.lmref); sv('m_obs',m.obs);
   }
+  if (data.demType) selDemType(data.demType);
   if (data.demandeur) {
     const d = data.demandeur;
-    sv('d_qual',d.qual); sv('d_nom',d.nom); sv('d_prn',d.prn); sv('d_ddn',d.ddn);
-    sv('d_tel',d.tel); sv('d_mail',d.mail); sv('d_siret',d.siret);
-    sv('d_adr',d.adr); sv('d_motif',d.motif);
+    sv('d_qual_part',d.qual); sv('d_nom',d.nom); sv('d_prn',d.prn); sv('d_ddn',d.ddn);
+    sv('d_lieu_naissance',d.lieu_naissance);
+    sv('d_piece_id',d.piece_id); sv('d_num_piece',d.num_piece); sv('d_valid_piece',d.valid_piece);
+    sv('d_tel',d.tel); sv('d_mail',d.mail);
+    sv('d_adr_voie',d.adr_voie); sv('d_adr_comp',d.adr_comp);
+    sv('d_adr_cp',d.adr_cp); sv('d_adr_vil',d.adr_vil); sv('d_adr_pays',d.adr_pays);
+    sv('d_denomination',d.denomination); sv('d_forme_jur',d.forme_jur);
+    sv('d_siret',d.siret); sv('d_qual_moral',d.qual_moral);
+    sv('d_siege_voie',d.siege_voie); sv('d_siege_cp',d.siege_cp); sv('d_siege_vil',d.siege_vil);
+    sv('d_rep_nom',d.rep_nom); sv('d_rep_prn',d.rep_prn); sv('d_rep_fonc',d.rep_fonc);
+    sv('d_motif_sel',d.motif_sel); sv('d_motif',d.motif);
   }
   if (data.bien) {
     const b = data.bien;
@@ -2625,10 +2873,10 @@ function applyData(data) {
       sv('b_vmc_c',b.eq.vmc_c); sv('b_vmc_s',b.eq.vmc_s); sv('b_pmr',b.eq.pmr);
     }
     if (b.res) {
-      sv('b_gaz',b.res.gaz); sv('b_ele',b.res.ele); sv('b_lnk',b.res.lnk);
-      sv('b_sol',b.res.sol); sv('b_chauf',b.res.chauf);
+      sv('b_gaz',b.res.gaz); sv('b_ele',b.res.ele);
+      sv('b_chauf',b.res.chauf); sv('b_ecs_type',b.res.ecs_type);
     }
-    if (b.dpe) { sv('b_dpe_val',b.dpe.val); sv('b_dpe_cl',b.dpe.cl); sv('b_enob',b.dpe.enob); chkDPE(); }
+    if (b.dpe) { sv('b_dpe_val',b.dpe.val); sv('b_dpe_cl',b.dpe.cl); sv('b_dpe_date',b.dpe.date); sv('b_dpe_ref',b.dpe.ref); chkDPE(); }
     sv('b_obs',b.obs);
   }
   if (data.mesures) {
@@ -2649,6 +2897,17 @@ function applyData(data) {
   if (data.obsGroupes) APP.obsGroupes = JSON.parse(JSON.stringify(data.obsGroupes));
   if (data.precs) { APP.precs = JSON.parse(JSON.stringify(data.precs)); renderPrecs(); }
   if (data.openSecs) APP.openSecs = data.openSecs;
+  if (data.enfants) {
+    sv('enf_nb',data.enfants.nb);
+    sv('enf_ages',data.enfants.ages);
+    sv('enf_presents',data.enfants.presents);
+  }
+  if (data.difficultes) {
+    sv('occ_sommeil',data.difficultes.sommeil);
+    sv('occ_sante',data.difficultes.sante);
+    sv('occ_difficultes',data.difficultes.autres);
+    sv('occ_projet',data.difficultes.projet);
+  }
   if (data.conclusions) {
     sv('cj_cond',data.conclusions.cond);
     sv('cn_bs',data.conclusions.bs);
@@ -2793,8 +3052,7 @@ function doPrint() {
       `Habilitation : ${hab}<br>` +
       (mtype ? `Fondement juridique : ${mtype}<br>` : '') +
       `Rapport du ${gv('m_date')}${gv('b_rue') ? ' · ' + gv('b_rue') + ' ' + gv('b_cp') + ' ' + gv('b_vil') : ''}<br>` +
-      `<em>Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso. ` +
-      `Diagnostic technique visuel et non destructif — ne constitue pas une décision administrative ou judiciaire.</em>`;
+      `<em>Diagnostic technique visuel et non destructif — ne constitue pas une décision administrative ou judiciaire.</em>`;
   }
   window.print();
 }
@@ -2821,6 +3079,19 @@ function tryRestore() {
       saveRecent(data);
     }
   } catch(e) {}
+}
+
+/* ════════════ TYPE DEMANDEUR ════════════ */
+function selDemType(t) {
+  document.querySelectorAll('[data-dem]').forEach(function(b) {
+    b.classList.toggle('on', b.dataset.dem === t);
+  });
+  var pBloc = document.getElementById('dem-particulier-bloc');
+  var mBloc = document.getElementById('dem-morale-bloc');
+  if (pBloc) pBloc.style.display = t === 'particulier' ? '' : 'none';
+  if (mBloc) mBloc.style.display = t === 'morale' ? '' : 'none';
+  APP.demType = t;
+  scheduleAutoSave();
 }
 
 /* ════════════ INITIALISATION ════════════ */
@@ -2876,6 +3147,12 @@ document.getElementById('btn-calc').addEventListener('click', buildConclusions);
 document.querySelectorAll('.btn-sig-clear').forEach(btn => {
   btn.addEventListener('click', function() { clearSig(btn.dataset.canvas); });
 });
+
+// Type demandeur
+document.querySelectorAll('[data-dem]').forEach(function(btn) {
+  btn.addEventListener('click', function() { selDemType(btn.dataset.dem); });
+});
+selDemType('particulier');
 
 // Navigation rapide
 document.querySelectorAll('.nav-item[data-target]').forEach(btn => {
