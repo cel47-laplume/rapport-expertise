@@ -953,37 +953,24 @@ textarea { resize: vertical; min-height: 72px; }
 @media print {
   @page {
     size: A4;
-    margin: 15mm 15mm 22mm 15mm;
-    @bottom-center {
-      content: "Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso. · CEL-47 · Expert : Denis Charbonnier";
-      font-size: 7pt;
-      color: #5A5856;
-      font-style: italic;
-    }
-    @bottom-right {
-      content: counter(page) " / " counter(pages);
-      font-size: 8pt;
-      color: #1F3864;
-      font-weight: 700;
-    }
+    margin: 15mm 15mm 20mm 15mm;
   }
-  .prt-logo { display: block !important; }
-  /* Filigrane supprimé — pied de page conservé */
-  /* Mention indissociable en bas de chaque page via pied de page fixe */
-  .prt-fixed-footer {
-    display: block !important;
+  #prt-header { display: block !important; }
+  .prt-footer-print {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     text-align: center;
     font-size: 7pt;
     color: #5A5856;
     font-style: italic;
-    padding: 4pt 10mm;
+    padding: 3pt 15mm;
     border-top: 0.5pt solid #ccc;
     background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
+  /* Filigrane supprimé — pied de page conservé */
+
   #screen-home, .app-header, .nav-bar, .bot-bar,
   .ne-btn, .ad-btn, .btn-row, .mission-btns,
   .photo-add, .photo-del, .sec-toggle-arrow,
@@ -1001,7 +988,8 @@ textarea { resize: vertical; min-height: 72px; }
   .app-content { padding: 0; max-width: 100%; }
   .bloc-body { padding: 8pt 10pt; }
   .sub { padding-bottom: 8pt; margin-bottom: 8pt; }
-  input, select { padding: 3pt 5pt; font-size: 8.5pt; min-height: auto; }
+  input, select { padding: 3pt 5pt; font-size: 8.5pt; min-height: auto; border: none; background: transparent; }
+  select { -webkit-appearance: none; appearance: none; }
   textarea { font-size: 8.5pt; }
   .sec-body { display: block !important; }
   .sec-toggle { background: #EBF3FF !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -1101,20 +1089,15 @@ textarea { resize: vertical; min-height: 72px; }
   <div class="app-content">
 
     <!-- LOGO IMPRESSION (caché sur écran) -->
-    <div class="prt-logo" style="display:none;margin-bottom:14px;padding-bottom:10px;border-bottom:2pt solid #1F3864;display:flex;align-items:center;justify-content:space-between">
-      <img src="data:image/jpeg;base64,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" alt="CEL-47" style="height:45px;width:auto">
-      <div>
-        <div style="font-size:9pt;color:#1F3864;font-weight:700">Rapport d'Expertise · Décence · Insalubrité remédiable</div>
-        <div style="font-size:8pt;color:#5A5856;margin-top:1pt">Cabinet CEL-47 · Denis Charbonnier · Laplume (47310) · Lot-et-Garonne</div>
+    <div id="prt-header" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:2px solid #1F3864;margin-bottom:14px">
+        <img src="data:image/jpeg;base64,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" alt="CEL-47" style="height:55px;width:auto">
+        <div style="text-align:right">
+          <div style="font-size:10pt;font-weight:800;color:#1F3864">Rapport d'Expertise · Décence · Insalubrité remédiable</div>
+          <div style="font-size:9pt;color:#1F3864;margin-top:2px">charbonnier@cel-47.fr · www.cel-47.fr</div>
+          <div style="font-size:8pt;color:#5A5856;margin-top:1px;font-style:italic">Certificat de compétences EFEL – Drouet Expertises, mai 2026</div>
+        </div>
       </div>
-      <div style="text-align:right">
-        <div style="font-size:9pt;font-weight:700;color:#1F3864">charbonnier@cel-47.fr</div>
-        <div style="font-size:9pt;color:#1F3864">www.cel-47.fr</div>
-        <div style="font-size:7.5pt;color:#5A5856;margin-top:1pt;font-style:italic">Certificat de compétences EFEL – Drouet Expertises, mai 2026</div>
-      </div>
-    </div>
-    
-    </div>
     </div>
 
     <!-- VERROU -->
@@ -1882,8 +1865,7 @@ textarea { resize: vertical; min-height: 72px; }
         </div>
         <div class="prt-footer" style="display:none" id="prt-footer"></div>
 
-    <!-- PIED DE PAGE GÉRÉ VIA @page CSS - div vide -->
-    <div class="prt-fixed-footer" style="display:none"></div>
+
 
       </div>
     </div>
@@ -3186,21 +3168,44 @@ function nouveau() {
 /* ════════════ IMPRESSION ════════════ */
 function doPrint() {
   buildConclusions();
-  const footer = document.getElementById('prt-footer');
-  if (footer) {
-    const hab = gv('m_hab') || 'Certificat de compétences — Expertise insalubrité / décence du logement (EFEL – Drouet Expertises, mai 2026)';
-    const mtype = APP.mission === 'decence' ? 'Décence — Décret n°2002-120 du 30/01/2002 · Art. 6 loi n°89-462 du 06/07/1989'
-                : APP.mission === 'insalubrite' ? 'Insalubrité remédiable — Art. L.1331-22 et L.1331-23 CSP · Grille ANAH'
-                : APP.mission === 'mixte' ? 'Décence / Insalubrité — Décret n°2002-120 · Art. L.1331-22 et L.1331-23 CSP · Art. 6 loi n°89-462'
-                : '';
-    footer.innerHTML =
-      `<strong>CEL-47 · Expert : Denis Charbonnier · SIRET : ${gv('m_siret')}</strong><br>` +
-      `Habilitation : ${hab}<br>` +
-      (mtype ? `Fondement juridique : ${mtype}<br>` : '') +
-      `Rapport du ${gv('m_date')}${gv('b_rue') ? ' · ' + gv('b_rue') + ' ' + gv('b_cp') + ' ' + gv('b_vil') : ''}<br>` +
-      `<em>Diagnostic technique visuel et non destructif — ne constitue pas une décision administrative ou judiciaire.</em>`;
+
+  // Afficher l'en-tête logo impression
+  const hdr = document.getElementById('prt-header');
+  if (hdr) hdr.style.display = 'block';
+
+  // Créer le pied de page impression (iOS + Mac compatible)
+  let footer = document.getElementById('prt-footer-js');
+  if (!footer) {
+    footer = document.createElement('div');
+    footer.id = 'prt-footer-js';
+    footer.className = 'prt-footer-print';
+    document.body.appendChild(footer);
   }
+  const hab = gv('m_hab') || 'Certificat de compétences — Expertise insalubrité/décence (EFEL – Drouet Expertises, mai 2026)';
+  const mtype = APP.mission === 'decence' ? 'Fondement : Art. 6 loi n°89-462 · Décret n°2002-120'
+              : APP.mission === 'insalubrite' ? 'Fondement : Art. L.1331-22 et L.1331-23 CSP · Grille ANAH'
+              : APP.mission === 'mixte' ? 'Fondement : Décret n°2002-120 · Art. L.1331-22 et L.1331-23 CSP · Art. 6 loi n°89-462'
+              : '';
+  footer.innerHTML =
+    'CEL-47 · Expert : Denis Charbonnier' +
+    (gv('m_siret') ? ' · SIRET : ' + gv('m_siret') : '') +
+    (gv('m_date') ? ' · Rapport du ' + gv('m_date') : '') +
+    (gv('b_rue') ? ' · ' + gv('b_rue') + ' ' + gv('b_cp') + ' ' + gv('b_vil') : '') + '<br>' +
+    (mtype ? mtype + '<br>' : '') +
+    'Le présent rapport et ses annexes forment un tout indissociable dont il ne peut faire état, vis-à-vis des tiers, que par publication ou communication in extenso. ' +
+    'Diagnostic technique visuel et non destructif — ne constitue pas une décision administrative ou judiciaire.';
+
+  // Afficher les valeurs NE/AD pour impression
+  document.querySelectorAll('.pv').forEach(p => p.style.display = 'flex');
+
   window.print();
+
+  // Remettre à l'état initial après impression
+  setTimeout(function() {
+    if (hdr) hdr.style.display = 'none';
+    if (footer) footer.remove();
+    document.querySelectorAll('.pv').forEach(p => p.style.display = 'none');
+  }, 2000);
 }
 
 /* ════════════ EXPORT WORD ════════════ */
