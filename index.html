@@ -1441,16 +1441,16 @@ textarea { resize: vertical; min-height: 72px; }
             <div class="ci-bar"><div class="ci-fill" id="res-fil" style="width:0%"></div></div>
             <div class="ci-verd" id="res-verd">—</div>
             <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-              <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#E5F3DC;color:#256B10">0–0,30 · Manquement</span>
-              <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#FDF3DC;color:#9A6200">0,30–0,40 · Intermédiaire</span>
-              <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#FAEAEA;color:#AE1E1E">0,40–0,60 · Avérée</span>
-              <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#7B0000;color:#fff">0,60–1 · Grave</span>
+              <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;<span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#E5F3DC;color:#256B10">ID &lt; 0,40 · Dégradation inexistante ou faible</span>
+              <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#FDF3DC;color:#9A6200">0,40 ≤ ID ≤ 0,55 · Dégradation moyenne</span>
+              <span style="padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;background:#7B0000;color:#fff">ID &gt; 0,55 · Dégradation très importante</span>
             </div>
             <div style="font-size:10px;color:var(--mu);margin-top:8px;font-style:italic;text-align:left;padding:8px 12px;background:var(--fond);border-radius:6px;border-left:3px solid var(--marine)">
           <strong style="color:var(--marine)">Références réglementaires :</strong><br>
           Décret n°2002-120 du 30 janvier 2002 relatif aux caractéristiques du logement décent ·
-          Art. L.1331-22 et L.1331-23 du Code de la santé publique (insalubrité) ·
+          Art. L.1331-22 et L.1331-23 du Code de la santé publique (insalubrité remédiable) ·
           Grille d'évaluation ANAH — ID = 1−√(((1−DM)²+(1−DG)²)/2) ·
+          Seuils ANAH : ID &lt; 0,40 (faible) · 0,40 ≤ ID ≤ 0,55 (moyenne) · ID &gt; 0,55 (très importante) ·
           Loi n°89-462 du 6 juillet 1989 art. 6 · Décret n°2021-872 du 30 juin 2021 (DPE)
         </div>
           </div>
@@ -1464,6 +1464,7 @@ textarea { resize: vertical; min-height: 72px; }
               <tfoot id="rec-foot"></tfoot>
             </table>
           </div>
+          <div id="nv-alert" style="display:none;background:#FFF3DC;border:2px solid #D09020;border-radius:7px;padding:10px 14px;font-size:12px;color:#7a5000;font-weight:700;margin-top:8px;line-height:1.6"></div>
           <button id="btn-calc" type="button" style="margin-top:10px;padding:11px 20px;background:var(--marine);color:var(--blanc);border:none;border-radius:8px;font-size:14px;font-weight:800">
             🔄 Recalculer le coefficient
           </button>
@@ -1501,6 +1502,26 @@ textarea { resize: vertical; min-height: 72px; }
           <textarea id="cn_bs" rows="3" placeholder="Besoins et demandes du porteur de projet…"></textarea>
         </div>
 
+        <div class="sub">
+          <div class="sub-title">Hiérarchisation des risques constatés</div>
+          <div class="alert-info" style="font-size:12px;margin-bottom:10px">
+            Réf. CPS Drouet Section 6 — Chaque désordre qualifié selon : Famille ANAH · Risque principal · Niveau de gravité
+          </div>
+          <div class="g3">
+            <div class="fd">
+              <label class="lb" style="color:var(--rouge)">🔴 Risques pour la santé</label>
+              <textarea id="cn_risque_sante" rows="3" placeholder="Humidité, moisissures, plomb, CO, amiante, parasites…"></textarea>
+            </div>
+            <div class="fd">
+              <label class="lb" style="color:#9A6200">🟠 Risques pour la sécurité</label>
+              <textarea id="cn_risque_secu" rows="3" placeholder="Électricité, gaz, structure, incendie, chutes…"></textarea>
+            </div>
+            <div class="fd">
+              <label class="lb" style="color:var(--marine)">🔵 Risques structurels</label>
+              <textarea id="cn_risque_struct" rows="3" placeholder="Fondations, charpente, planchers, toiture…"></textarea>
+            </div>
+          </div>
+        </div>
         <div class="sub">
           <div class="sub-title">Synthèse et observations de l'expert</div>
           <textarea id="cn_ob" rows="4" placeholder="Synthèse technique, orientations administratives (ARS, relogement, ANAH…)"></textarea>
@@ -1629,7 +1650,15 @@ const SECS = [
     {id:'A10',lb:'Gouttières & chéneaux',mo:true,it:["Encombrement anormal","Présence de chocs","Fuites, fissures ou corrosion","Fixations correctes","Absence piquages EU vers EP","Pentes vers les descentes","Évacuation eaux pluviales correcte"]}
   ]},
   {id:'B',lb:'Menuiseries · Étanchéité · Ventilation',ar:'Art. 2 — suite',gs:[
-    {id:'B11',lb:'Menuiseries extérieures',it:["Hauteur d'allège conforme","Portes extérieures étanches","Fenêtres étanches","Étanchéité à l'air des portes","Étanchéité à l'air des fenêtres","Seuil aux portes"]},
+    {id:'B11',lb:'Menuiseries extérieures',it:[
+      "Hauteur d\'allège conforme (art. 2 Décret n°2002-120)",
+      "Portes extérieures : protection contre les infiltrations d\'eau et d\'air",
+      "Fenêtres : protection contre les infiltrations d\'eau et d\'air",
+      "Étanchéité à l\'air des portes extérieures",
+      "Étanchéité à l\'air des fenêtres",
+      "Seuil aux portes (protection contre les infiltrations basses)",
+      "Volets / occultation : présence et état (battants, roulants, persiennes) — protection intempéries (art. 2 Décret n°2002-120) — observation uniquement, hors notation ANAH autonome"
+    ]},
     {id:'B12',lb:'Ventilations',it:["Protection infiltrations air parasites","Ventilation naturelle présente","VMC présente","Pièces principales ouverture à l'air libre","Pièces humides dispositif évacuation","Renouvellement d'air adapté"]},
     {id:'B13',lb:'Luminosité naturelle',it:["Pièces principales éclairage naturel suffisant et ouvrant à l'air libre"]},
     {id:'B14',lb:'Menuiseries parties communes',ao:true,it:["Porte d'entrée immeuble","SAS, porche","Fenêtres parties communes"]},
@@ -1715,9 +1744,15 @@ const SECS = [
       "Détecteur de monoxyde de carbone (CO) présent — recommandé si chauffage combustion (gaz, fioul, bois)",
       "Extincteur en parties communes — obligatoire selon catégorie d'immeuble (ERP, IGH) — non obligatoire en logement privatif individuel"
     ]},
-    {id:'L5',lb:'ERNMT',it:["État des risques naturels et technologiques présent"]},
-    {id:'L6',lb:'Déchets',it:["Absence de déchets et encombrants intérieurs ou extérieurs"]},
-    {id:'L7',lb:'Bruits',it:["Absence de sources de nuisances sonores"]}
+    {id:'L5',lb:'ERNMT (document annexe — hors grille de dégradation ANAH)',it:[
+      "ERNMT : État des risques naturels, miniers et technologiques — document prévu par l'art. L.125-5 CCH, annexé au bail, relevant de la responsabilité du bailleur — vérification documentaire uniquement, hors périmètre de notation ANAH"
+    ]},
+    {id:'L6',lb:'Déchets (observation sanitaire — hors grille de dégradation ANAH)',it:[
+      "Présence de déchets, ordures ou encombrants intérieurs ou extérieurs — observation factuelle relevant du RSD, hors périmètre de la grille de dégradation ANAH (Guide Grille ANAH — les items liés à la situation sanitaire ne sont pas repris dans la grille de dégradation)"
+    ]},
+    {id:'L7',lb:'Nuisances sonores (observation sanitaire — hors grille de dégradation ANAH)',it:[
+      "Sources de nuisances sonores identifiées — observation factuelle relevant du RSD, hors périmètre de la grille de dégradation ANAH"
+    ]}
   ]}
 ];
 
@@ -2231,6 +2266,8 @@ function buildConclusions() {
   const tfoot = document.getElementById('rec-foot');
   tbody.innerHTML = '';
   let tND=0, tNDM=0, tNDmaj=0, tNDMmaj=0;
+  // Compteur NV sur éléments majeurs (Guide ANAH : > 3 NV = irrecevable)
+  let nvMajCount = 0;
   SECS.forEach(sec => {
     const hasVisible = sec.gs.some(g => {
       if (g.mo && APP.type !== 'maison') return false;
@@ -2241,6 +2278,16 @@ function buildConclusions() {
     const r = calcSec(sec);
     tND+=parseFloat(r.sND); tNDM+=parseFloat(r.sNDM);
     tNDmaj+=parseFloat(r.sNDmaj); tNDMmaj+=parseFloat(r.sNDMmaj);
+    // Compter NV sur éléments majeurs
+    sec.gs.forEach(g => {
+      if (!g.mo) return;
+      if (g.mo && APP.type !== 'maison') return;
+      g.it.forEach((_, ix) => {
+        const k = g.id + '_' + ix;
+        const sc = APP.scores[k] || {};
+        if (!sc.ne || sc.ne === 'NV') nvMajCount++;
+      });
+    });
     const tr = document.createElement('tr');
     tr.innerHTML = `<td>§${sec.id} — ${sec.lb}</td><td>${r.neM||'—'}</td><td>${r.adM||'—'}</td>
       <td>${(APP.pieces.length/5).toFixed(2)}</td>
@@ -2253,6 +2300,18 @@ function buildConclusions() {
   const DG = tNDM > 0 ? tND/tNDM : 0;
   const DM = tNDMmaj > 0 ? tNDmaj/tNDMmaj : DG;
   const ID = Math.min(Math.max(1-Math.sqrt(((1-DM)*(1-DM)+(1-DG)*(1-DG))/2),0),1);
+  // Alerte NV > 3 éléments majeurs — Guide Grille ANAH
+  const nvAlert = document.getElementById('nv-alert');
+  if (nvAlert) {
+    if (nvMajCount > 3) {
+      nvAlert.style.display = 'block';
+      nvAlert.textContent = '⚠️ ATTENTION — ' + nvMajCount + ' élément(s) majeur(s) non renseigné(s) (NV). ' +
+        'Selon le Guide Grille ANAH, au-delà de 3 éléments forts non renseignés, les notes de dégradation restent partielles et irrecevables. ' +
+        'Veuillez compléter ou justifier ces éléments non visités.';
+    } else {
+      nvAlert.style.display = 'none';
+    }
+  }
   document.getElementById('res-dm').textContent = (DM*100).toFixed(1)+'%';
   document.getElementById('res-dg').textContent = (DG*100).toFixed(1)+'%';
   document.getElementById('res-id').textContent = ID.toFixed(3);
@@ -2260,11 +2319,14 @@ function buildConclusions() {
   ci.textContent = ID.toFixed(3);
   const fil = document.getElementById('res-fil');
   fil.style.width = Math.min(ID/0.8*100,100)+'%';
+  // Seuils ANAH officiels — Guide Grille ANAH
+  // ID < 0,40 : dégradation inexistante ou faible
+  // 0,40 ≤ ID ≤ 0,55 : dégradation moyenne
+  // ID > 0,55 : dégradation très importante
   let vt, cl, bg;
-  if (ID<=0.30)      { vt='✅ Manquement à la salubrité (0–0,30)'; cl='#256B10'; bg='#4aaa20'; }
-  else if (ID<=0.40) { vt='⚠️ Zone intermédiaire (0,30–0,40)';     cl='#7a5000'; bg='#D09020'; }
-  else if (ID<=0.60) { vt='🚨 Insalubrité avérée (0,40–0,60)';     cl='#AE1E1E'; bg='#cc3030'; }
-  else               { vt='🔴 Insalubrité grave (CI > 0,60)';       cl='#7B0000'; bg='#7B0000'; }
+  if (ID < 0.40)       { vt='✅ Dégradation inexistante ou faible (ID < 0,40)';       cl='#256B10'; bg='#4aaa20'; }
+  else if (ID <= 0.55) { vt='⚠️ Dégradation moyenne (0,40 ≤ ID ≤ 0,55)';             cl='#9A6200'; bg='#D09020'; }
+  else                 { vt='🔴 Dégradation très importante (ID > 0,55)';              cl='#7B0000'; bg='#7B0000'; }
   ci.style.color = cl;
   fil.style.background = bg;
   const verd = document.getElementById('res-verd');
@@ -2424,7 +2486,10 @@ function collectData() {
     obsGroupes: JSON.parse(JSON.stringify(APP.obsGroupes)),
     precs: JSON.parse(JSON.stringify(APP.precs)),
     conclusions: {
-      cond:gv('cj_cond'), bs:gv('cn_bs'), ob:gv('cn_ob')
+      cond:gv('cj_cond'), bs:gv('cn_bs'), ob:gv('cn_ob'),
+      risque_sante:gv('cn_risque_sante'),
+      risque_secu:gv('cn_risque_secu'),
+      risque_struct:gv('cn_risque_struct')
     },
     signatures: {
       expert:{ nom:gv('m_exp')||'Denis Charbonnier', date:gv('sg_ex'), img:APP.sigImages.expert },
@@ -2588,6 +2653,9 @@ function applyData(data) {
     sv('cj_cond',data.conclusions.cond);
     sv('cn_bs',data.conclusions.bs);
     sv('cn_ob',data.conclusions.ob);
+    sv('cn_risque_sante',data.conclusions.risque_sante);
+    sv('cn_risque_secu',data.conclusions.risque_secu);
+    sv('cn_risque_struct',data.conclusions.risque_struct);
   }
   if (data.signatures) {
     const s = data.signatures;
