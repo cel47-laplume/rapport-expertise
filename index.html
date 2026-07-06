@@ -747,6 +747,72 @@ textarea { resize: vertical; min-height: 72px; }
   min-height: 56px;
 }
 .cst-obs-item:focus { border-color: var(--marine); outline: none; }
+/* Photo par item */
+.cst-photo-zone {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-cst-photo {
+  padding: 6px 12px;
+  border: 1.5px dashed var(--border);
+  border-radius: 6px;
+  background: none;
+  font-size: 12px;
+  color: var(--mu);
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-cst-photo.has-photo {
+  border-color: var(--vert);
+  color: var(--vert-d);
+  background: var(--gl);
+}
+.cst-photo-inp { display: none; }
+.cst-photo-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+.cst-photo-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.cst-photo-cap-inp {
+  flex: 1;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 11px;
+  background: var(--blanc);
+  font-family: inherit;
+}
+.btn-cst-photo-del {
+  background: none;
+  border: none;
+  color: var(--rouge);
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  min-height: 32px;
+  min-width: 32px;
+}
+/* Impression photo item */
+@media print {
+  .cst-photo-zone { margin-top: 4pt; }
+  .btn-cst-photo, .btn-cst-photo-del, .cst-photo-cap-inp { display: none !important; }
+  .cst-photo-thumb { width: 60pt; height: 60pt; display: block; }
+  .cst-photo-print-cap { display: block !important; font-size: 7.5pt; color: #5A5856; font-style: italic; margin-top: 2pt; }
+}
+.cst-photo-print-cap { display: none; }
 
 /* ── CONCLUSIONS ── */
 .ci-box {
@@ -2318,7 +2384,87 @@ function buildCstItem(k, it, sc, nbP, isMaj) {
   obsTA.value = sc.obs || '';
   obsTA.addEventListener('input', function() { setObs(k, this.value); });
   div.appendChild(obsTA);
+
+  // ── Photo optionnelle par item ──
+  const photoZone = document.createElement('div');
+  photoZone.className = 'cst-photo-zone';
+  photoZone.id = 'pz-' + k;
+  const photoInp = document.createElement('input');
+  photoInp.type = 'file';
+  photoInp.accept = 'image/*';
+  photoInp.className = 'cst-photo-inp';
+  photoInp.setAttribute('capture', 'environment');
+  const photoBtn = document.createElement('button');
+  photoBtn.type = 'button';
+  photoBtn.className = 'btn-cst-photo' + (sc.photo ? ' has-photo' : '');
+  photoBtn.textContent = sc.photo ? '📷 Photo ✓' : '📷 Photo';
+  photoBtn.title = 'Ajouter une photo pour illustrer ce désordre';
+  photoBtn.addEventListener('click', function() { photoInp.click(); });
+  photoInp.addEventListener('change', (function(key, btn, zone) {
+    return function(ev) {
+      const f = ev.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = function(e) {
+        if (!APP.scores[key]) APP.scores[key] = {};
+        APP.scores[key].photo = e.target.result;
+        APP.scores[key].photo_cap = APP.scores[key].photo_cap || '';
+        btn.classList.add('has-photo');
+        btn.textContent = '📷 Photo ✓';
+        renderCstPhoto(key, zone, btn);
+        scheduleAutoSave();
+      };
+      r.readAsDataURL(f);
+      ev.target.value = '';
+    };
+  })(k, photoBtn, photoZone));
+  photoZone.appendChild(photoInp);
+  photoZone.appendChild(photoBtn);
+  if (sc.photo) renderCstPhoto(k, photoZone, photoBtn);
+  div.appendChild(photoZone);
   return div;
+}
+
+function renderCstPhoto(k, zone, btn) {
+  const ex = zone.querySelector('.cst-photo-preview');
+  if (ex) ex.remove();
+  const sc = APP.scores[k] || {};
+  if (!sc.photo) return;
+  const preview = document.createElement('div');
+  preview.className = 'cst-photo-preview';
+  const thumb = document.createElement('img');
+  thumb.className = 'cst-photo-thumb';
+  thumb.src = sc.photo;
+  thumb.alt = 'Photo désordre';
+  preview.appendChild(thumb);
+  const capInp = document.createElement('input');
+  capInp.type = 'text';
+  capInp.className = 'cst-photo-cap-inp';
+  capInp.placeholder = 'Légende de la photo…';
+  capInp.value = sc.photo_cap || '';
+  capInp.addEventListener('input', function() { APP.scores[k].photo_cap = this.value; });
+  preview.appendChild(capInp);
+  const printCap = document.createElement('div');
+  printCap.className = 'cst-photo-print-cap';
+  printCap.textContent = sc.photo_cap || '';
+  preview.appendChild(printCap);
+  const delBtn = document.createElement('button');
+  delBtn.type = 'button';
+  delBtn.className = 'btn-cst-photo-del';
+  delBtn.textContent = '✕';
+  delBtn.addEventListener('click', (function(key, b) {
+    return function() {
+      delete APP.scores[key].photo;
+      delete APP.scores[key].photo_cap;
+      b.classList.remove('has-photo');
+      b.textContent = '📷 Photo';
+      const prev = zone.querySelector('.cst-photo-preview');
+      if (prev) prev.remove();
+      scheduleAutoSave();
+    };
+  })(k, btn));
+  preview.appendChild(delBtn);
+  zone.appendChild(preview);
 }
 
 function setNE(k, v) {
